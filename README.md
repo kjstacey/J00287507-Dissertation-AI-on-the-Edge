@@ -48,8 +48,8 @@ ml-edge-benchmark/
 ├── platforms/
 ├── experiments/
 ├── results/
-├── tests/
-└── scripts/
+├── models/
+├── models/
 ~~~
 
 ---
