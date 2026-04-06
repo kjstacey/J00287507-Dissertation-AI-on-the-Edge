@@ -49,7 +49,7 @@ ml-edge-benchmark/
 ├── experiments/
 ├── results/
 ├── models/
-├── models/
+├── security/
 ~~~
 
 ---
