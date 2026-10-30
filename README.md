@@ -75,6 +75,10 @@ FZTEBUMILV7T646.vhd
 ```
 
 This file connects the camera pipeline, image storage, ZyNet classifier, VGA path, and LED result output.
+```text
+genTestData.py 
+```
+This file generates fixed-point MNIST test vectors used by the ZyNet behavioral simulation. The script can generate either a single selected test image with supporting visualization/header files or the complete 10,000-image MNIST test set. These generated simulation inputs are treated as data artifacts and are preserved separately from the source code.
 
 ## ZyNet Neural-Network RTL
 
