@@ -1,120 +1,124 @@
-# MNIST Model Development
+# MNIST Model Artifacts
 
-This branch contains the model-development files used for the MNIST experiments in this research.
+This branch serves as the main entry point for the MNIST model used in the dissertation project.
 
-Its purpose is to document and preserve the **training, model-generation, conversion, and supporting notes** for the MNIST models used in both:
+The MNIST network is a fully connected feed-forward neural network with the architecture:
 
-- the **FPGA/ZyNet implementation**, and
-- the **Unity/ONNX implementation**.
-
-This branch does **not** contain the full FPGA hardware project, Vivado implementation files, cloud networking code, or platform performance benchmarks. Those materials are maintained separately.
-
-## Model Overview
-
-The MNIST classifier used for the FPGA implementation is a fully connected feed-forward neural network with the following architecture:
-
+```text
 784 -> 30 -> 20 -> 10
+```
 
-The 28 × 28 MNIST image is flattened into 784 input values. The network contains two hidden layers with 30 and 20 neurons and produces 10 output values corresponding to the digits 0 through 9.
+using sigmoid activation after each fully connected layer.
 
-The same trained MNIST model is also used as the basis for the Unity implementation after conversion to ONNX format.
+The network contains **24,350 trainable parameters** and was used as the common model for the FPGA, PC, Meta Quest 3S, and cloud-assisted MNIST experiments.
 
-## Contents of This Branch
+## Repository Structure
 
-The files in this branch may include:
+The MNIST model materials are separated into branches based on purpose.
 
-- Python scripts used to load MNIST data;
-- neural-network training scripts;
-- model-definition code;
-- scripts used to export trained weights and biases;
-- ZyNet-compatible weight and bias files;
-- scripts used during model conversion;
-- the trained model files;
-- ONNX conversion files for Unity;
-- Jupyter notebooks documenting the model-creation process;
-- command-prompt screenshots showing training results;
-- notes documenting model settings, conversion steps, and validation results.
+### Model Code Branch
 
-Files associated only with FPGA implementation, Vivado synthesis, ILA capture, hardware benchmarking, cloud communication, or power measurement are not part of this branch.
+The model-code branch contains the Python source used to:
 
-## FPGA / ZyNet Model
+- train and load the MNIST model;
+- verify Python classification accuracy;
+- prepare the model for ZyNet/FPGA use;
+- convert the model to ONNX;
+- generate FPGA parameter files; and
+- generate the MNIST test-data files used by Unity.
 
-The FPGA implementation is based on the open-source **ZyNet** project.
+This branch is intended for users who want to inspect or reproduce the model-processing code.
 
-Original ZyNet repository:
+### Model Notebooks and Data Branch
 
-https://github.com/dsdnu/zynet
+The notebooks/data branch contains:
 
-The FPGA notebook documents the process used to:
+- `MNIST_ZyNet_Model_Creation.ipynb`;
+- `MNIST_ONNX_Model_Creation.ipynb`;
+- historical model-development screenshots;
+- packaged ZyNet-generated artifacts; and
+- packaged ONNX model artifacts.
 
-1. load the MNIST dataset;
-2. define the 784 → 30 → 20 → 10 network;
-3. train and evaluate the model;
-4. save the trained weights and biases;
-5. convert the trained parameters into the format required by ZyNet; and
-6. generate the memory files used by the FPGA implementation.
+This branch provides step-by-step documentation of how the deployable model representations were created.
 
-Relevant generated artifacts may include:
+## Files in This Branch
 
-WeigntsAndBiases.txt
-weights.mem
-biases.mem
+This main branch contains packaged model artifacts for convenient access.
 
-The filename `WeigntsAndBiases.txt` is intentionally retained because it matches the file used by the working implementation.
+| File | Description |
+|---|---|
+| `mnist_onnx_model.zip` | ONNX model and supporting artifacts used by the Unity PC and Meta Quest 3S implementations. |
+| `zynet_fpga_model_parameters.zip` | FPGA model parameter files generated from the trained MNIST network. |
+| `zynet_model_fpga_src.zip` | ZyNet-generated FPGA source associated with the MNIST model. |
 
-## Unity / ONNX Model
+These packages provide the model-level artifacts needed by the platform-specific implementations without requiring the reader to reproduce the conversion process first.
 
-A separate notebook documents the conversion of the trained MNIST model into the ONNX format used by the Unity implementation.
+## Model Deployment Paths
 
-This allows the same trained network to be traced from its original Python implementation into both FPGA and Unity deployment environments while keeping the conversion steps reproducible.
+The same trained MNIST network was prepared for two primary local deployment paths:
 
-The Unity notebook will document:
+```text
+                         Trained MNIST Model
+                                |
+               +----------------+----------------+
+               |                                 |
+               v                                 v
+          ZyNet / FPGA                      ONNX / Unity
+               |                                 |
+               v                                 v
+     FPGA parameters and                 mnist_model.onnx
+       generated source                         |
+               |                                 v
+               v                         PC / Meta Quest 3S
+            ZedBoard
+```
 
-- model reconstruction or loading;
-- conversion to ONNX;
-- input and output formatting;
-- any preprocessing requirements;
-- validation of the converted model; and
-- the final ONNX model used by Unity.
+The cloud-assisted implementations used the same MNIST classification model through the corresponding remote inference workflow.
 
-## Jupyter Notebooks
+## Model Validation
 
-The planned notebooks for this branch are:
+The software version of the model classified:
 
-MNIST_ZyNet_Model_Creation.ipynb
-MNIST_Unity_ONNX_Conversion.ipynb
+```text
+9,663 / 10,000
+```
 
-The first notebook documents training and FPGA/ZyNet model preparation.
+MNIST test images correctly, corresponding to:
 
-The second notebook documents conversion of the trained MNIST model for Unity.
+```text
+96.63%
+```
 
-## MNIST Dataset
+classification accuracy on the complete MNIST test set.
 
-The MNIST handwritten-digit dataset is used for model training and evaluation.
+The ONNX representation used by Unity reproduced the same controlled classification accuracy.
 
-Original MNIST dataset site:
+The FPGA implementation used the same trained network parameters but required a separate hardware representation and numerical implementation.
 
-https://yann.lecun.com/exdb/mnist/
+## Scope of This Branch
 
-The notebooks document how the dataset is loaded and used rather than treating the dataset itself as original project material.
+This branch contains **model-level artifacts only**.
 
-## Training Evidence
+The following are maintained separately:
 
-Screenshots or text output from the command prompt may be included to preserve representative training results associated with the saved model.
+- FPGA hardware integration;
+- Vivado projects;
+- camera acquisition and preprocessing;
+- FPGA latency and throughput instrumentation;
+- PC Unity implementation;
+- Meta Quest 3S Unity implementation;
+- CPU and GPU benchmarks;
+- cloud-assisted inference clients;
+- power and memory measurements; and
+- experimental results.
 
-These files are intended as supporting evidence of the training process and should correspond to the model artifacts stored in this branch.
+This organization separates model creation and conversion from the platform-specific implementation and benchmarking code used in the dissertation experiments.
 
 ## Reproducibility
 
-The goal of this branch is to make the MNIST model-development workflow reproducible.
+For detailed reproduction of the model artifacts:
 
-A reader should be able to follow the notebooks and scripts to understand:
+- use the **model-code branch** for the underlying Python source; and
+- use the **model notebooks and data branch** for the documented ZyNet and ONNX workflows.
 
-- how the MNIST model was trained;
-- what architecture was used;
-- how the trained parameters were saved;
-- how the FPGA-compatible files were generated;
-- how the model was converted to ONNX; and
-- which resulting model files were used in the later platform experiments.
-
-Platform-specific performance results are intentionally kept separate from the model-development materials in this branch.
+The packaged ZIP files in this branch provide the resulting model artifacts used by the deployment implementations.
