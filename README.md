@@ -75,6 +75,7 @@ The starting image index in the generator is changed for each 100-image block be
 The branch includes the generated ROM initialization files for the controlled 1,000-image experiment:
 
 ```text
+mnist_test_pixels_0000.coe
 mnist_test_pixels_0100.coe
 mnist_test_pixels_0200.coe
 mnist_test_pixels_0300.coe
