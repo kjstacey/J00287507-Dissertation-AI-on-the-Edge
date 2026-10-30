@@ -5,6 +5,7 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 Library UNISIM;
 use UNISIM.vcomponents.all;
@@ -121,6 +122,8 @@ end component;
 	signal clk25u        : std_logic;
 	signal clk25         : std_logic;
 	signal buffered_pclk : std_logic;
+	signal pclk_count   : unsigned(23 downto 0) := (others => '0');
+    signal blink_count  : unsigned(25 downto 0) := (others => '0');
 	
 begin
   
@@ -148,12 +151,16 @@ fb : blk_mem_gen_0
     addra => capture_addr,
     dina  => capture_data,
 	 
-    clkb  => clk50,
+    clkb  => clk25,
     addrb => frame_addr,
     doutb => frame_pixel
   );
   
-  led <= "0000000" & config_finished;
+  LED(0) <= config_finished;
+  LED(1) <= pclk_count(23);
+  LED(2) <= '0';
+  LED(3) <= blink_count(25);
+  LED(7 downto 4) <= (others => '0');
   
 capture: ov7670_capture PORT MAP(
 		pclk  => OV7670_PCLK,
@@ -183,5 +190,19 @@ your_instance_name : clocking
     -- Clock out ports
     CLK_50 => CLK50,
     CLK_25 => CLK25);
+    
+    process(OV7670_PCLK)
+    begin
+        if rising_edge(OV7670_PCLK) then
+            pclk_count <= pclk_count + 1;
+        end if;
+    end process;
+    
+    process(clk50)
+    begin
+        if rising_edge(clk50) then
+            blink_count <= blink_count + 1;
+        end if;
+    end process;
 
 end Behavioral;

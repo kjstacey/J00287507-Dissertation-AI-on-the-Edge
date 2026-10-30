@@ -42,7 +42,8 @@ begin
             address_next <= (others => '0');
             wr_hold <= (others => '0');
          else
-            dout    <= d_latch(10 downto 7) & d_latch(15 downto 12) & d_latch(4 downto 1); 
+           dout    <= d_latch(10 downto 7) & d_latch(15 downto 12) & d_latch(4 downto 1); 
+           --dout <= d_latch(15 downto 12) & d_latch(4 downto 1) & d_latch(10 downto 7);
             address <= address_next;
             we      <= wr_hold(1);
             wr_hold <= wr_hold(0) & (href and not wr_hold(0));
