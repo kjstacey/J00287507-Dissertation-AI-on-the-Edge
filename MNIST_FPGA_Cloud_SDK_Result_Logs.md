@@ -7,7 +7,7 @@ This file consolidates the SDK/UART result information that was pasted during th
 - The formal cloud experiment used 100-image controlled MNIST batches.
 - Accuracy, latency, throughput, and communication-error information were recorded by the SDK application and written to BRAM.
 - Some original console dumps included full per-image CSV-style records.
-- This archive includes only values that were explicitly preserved in the conversation/history available here. It does not invent missing per-image rows.
+- This archive includes only values that were explicitly preserved in the clipboard/running document from the SDK terminal and reorganized here. It does not invent missing per-image rows.
 
 ---
 
