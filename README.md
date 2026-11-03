@@ -60,6 +60,61 @@ The ONNX model is included so that the Unity source can be reconstructed and exe
 
 The original model-generation workflow and validation are documented separately.
 
+## MNIST Test Data
+
+The benchmark scripts use the standard MNIST test-set inputs exported in Unity-compatible binary form.
+
+Because the two binary files together exceed the repository upload limit, they are packaged as:
+
+```text
+mnist_test_binaries.zip
+```
+
+The ZIP archive contains:
+
+```text
+mnist_test_images.bin
+mnist_test_labels.bin
+```
+
+### `mnist_test_images.bin`
+
+Contains the full MNIST test image set used by the Unity benchmark scripts.
+
+The file stores:
+
+- 10,000 test images;
+- 784 values per image; and
+- each value as a 32-bit floating-point number.
+
+This file is used by:
+
+- `MNISTAccuracyTest.cs`
+- `MNISTLatencyTest.cs`
+- `MNISTMemoryTest.cs`
+- `MNISTThroughputTest.cs`
+- `MNISTSustainedInference.cs`
+
+### `mnist_test_labels.bin`
+
+Contains one label for each of the 10,000 MNIST test images.
+
+This file is used by `MNISTAccuracyTest.cs` to compare the model prediction with the expected digit.
+
+### Using the Test Data
+
+Before assigning the files as Unity `TextAsset` references, extract:
+
+```text
+mnist_test_binaries.zip
+```
+
+and add the two `.bin` files to the Unity project.
+
+Unity will generate corresponding `.meta` files when the assets are imported.
+
+These binary files are benchmark **input data**, not experimental result files. Benchmark outputs such as CSV files and analysis results are stored in the corresponding **MNIST Unity Local PC Data and Notebook** branch.
+
 ## Source Scripts
 
 ### `MNISTModelLoader.cs`
