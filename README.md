@@ -51,7 +51,7 @@ Unity supported:
 - cloud-assisted client applications.
 
 ### FPGA Development
-
+- [Zynq 7000 SoC Technical Reference Manual (UG585)](https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Introduction?tocId=Hf6C7Oo5ABvv2hkWRoiihQ).
 - [Vivado Design Suite 2018.1 Release Notes, Installation, and Licensing Guide (UG973)](https://docs.amd.com/v/u/2018.1-English/ug973-vivado-release-notes-install-license)
 - [Vivado Design Suite 2018.1 Implementation Guide (UG904)](https://docs.amd.com/v/u/2018.1-English/ug904-vivado-implementation)
 - [Xilinx SDK / XSCT 2018.1 Reference Guide (UG1208)](https://docs.amd.com/v/u/2018.1-English/ug1208-xsct-reference-guide)
