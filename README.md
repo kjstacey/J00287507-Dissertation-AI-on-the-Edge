@@ -69,6 +69,82 @@ Vivado 2018.1 was used for FPGA:
 
 Xilinx SDK 2018.1 was used for the Zynq processing-system software associated with the cloud-assisted FPGA implementation.
 
+### FPGA Security Advisories and Vulnerability References
+
+The following resources support the security evaluation of the ZedBoard Rev E, Xilinx Zynq-7020 SoC, Vivado 2018.1, and Xilinx SDK 2018.1 used in the dissertation experiments.
+
+These references document hardware security features, published vulnerabilities, development-tool considerations, and the applicability of security advisories to the experimental configurations.
+
+#### AMD/Xilinx Security Documentation
+
+- [Zynq-7000 SoC Technical Reference Manual (UG585)](https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Introduction?tocId=Hf6C7Oo5ABvv2hkWRoiihQ)
+  - Documents secure boot, bitstream protection, authentication, programming interfaces, and hardware security capabilities.
+
+- [AMD Advisory 73541 — Defeating Bitstream Encryption](https://docs.amd.com/r/en-US/73541/Solution)
+  - Describes security weaknesses involving 7-Series FPGA bitstream encryption and recommended countermeasures.
+
+- [AMD Answer Record 70394 — Zynq-7000 Meltdown and Spectre Vulnerabilities](https://adaptivesupport.amd.com/s/article/70394?language=en_US)
+  - Identifies ARM Cortex-A9 susceptibility to Spectre Variant 1 (CVE-2017-5753) and Variant 2 (CVE-2017-5715).
+  - Relevant to the Zynq-7020 processing system, particularly ARM execution during cloud-assisted inference.
+
+- [AMD Answer Record 71292 — Zynq-7000 FSBL Security Advisory](https://adaptivesupport.amd.com/s/article/71292?language=en_US)
+  - Documents a security issue affecting Zynq-7000 FSBL versions 2018.2 and earlier.
+  - Reviewed in relation to the JTAG programming workflow and Xilinx SDK 2018.1.
+
+- [AMD Answer Record 76974 — Zynq-7000 FSBL Authentication Attack](https://adaptivesupport.amd.com/s/article/76974?language=en_US)
+  - Describes an authentication-related attack affecting certain Zynq-7000 FSBL configurations.
+  - Associated with CVE-2022-23822.
+
+- [AMD Answer Record 70699 — Vivado 2018.1 IP Release Notes](https://adaptivesupport.amd.com/s/article/70699?language=en_US)
+  - Provides IP change information for Vivado 2018.1.
+  - Used to review the IP components incorporated into the experimental FPGA design.
+
+#### Vulnerability Databases
+
+- [OpenCVE — Xilinx Zynq-7000 Vulnerabilities](https://app.opencve.io/cve/?product=zynq-7000&vendor=xilinx)
+  - Provides an index of published CVEs associated with the Zynq-7000 device family.
+
+- [NVD — CVE-2021-44850](https://nvd.nist.gov/vuln/detail/CVE-2021-44850)
+  - Documents a Zynq-7000 boot ROM vulnerability involving manipulated SD-card boot images.
+  - The experimental implementations used JTAG programming rather than SD-card boot.
+
+- [NVD — CVE-2022-23822](https://nvd.nist.gov/vuln/detail/CVE-2022-23822)
+  - Documents an authentication-related vulnerability involving the Zynq-7000 FSBL.
+  - Applicability depends on the boot and authentication configuration.
+
+- [NVD — CVE-2021-27208](https://nvd.nist.gov/vuln/detail/CVE-2021-27208)
+  - Documents a Zynq-7000 NAND flash boot vulnerability.
+  - The NAND boot attack path was not part of the documented experimental workflow.
+
+#### Additional References Reviewed
+
+- [AMD Support — Broken 7-Series Encryption and Zynq-7000 Countermeasures](https://adaptivesupport.amd.com/s/question/0D52E00006hpX05SAE/broken-7series-encryption-and-countermeasures-of-zynq7000?language=en_US)
+  - Community discussion related to FPGA bitstream encryption.
+  - AMD Advisory 73541 provides the primary technical reference.
+
+- [AMD Answer Record 66071 — Zynq UltraScale+ MPSoC Design Advisories](https://adaptivesupport.amd.com/s/article/66071?language=en_US)
+  - Reviewed for device-family applicability.
+  - Concerns Zynq UltraScale+ devices rather than the Zynq-7020 used in the experiments.
+
+- [NVD — CVE-2025-52541](https://nvd.nist.gov/vuln/detail/CVE-2025-52541)
+  - Describes a Windows Vivado vulnerability reported in connection with newer Vivado versions.
+  - Applicability to Vivado 2018.1 was not established; therefore, it was excluded from the confirmed vulnerability findings.
+
+#### Application to the Dissertation
+
+The FPGA security evaluation examined the documented advisories in relation to the actual experimental configuration:
+
+- ZedBoard Revision E with Zynq-7020 (XC7Z020CLG484-1).
+- JTAG programming through Vivado 2018.1.
+- Xilinx SDK 2018.1 for cloud-assisted ARM application execution.
+- Pretrained NN weights and biases initialized within the PL.
+- Physical and debugging access through JTAG and UART.
+- ARM Cortex-A9 execution during cloud-assisted inference.
+
+Published vulnerabilities were not automatically treated as exploitable in the experimental implementation. Findings were evaluated according to the affected device, software version, required attack conditions, and documented configuration.
+
+The security evaluation results are presented in Chapter IV, Section 4.7 of the dissertation. These links provide supporting vendor documentation and vulnerability records rather than evidence that exploitation occurred during testing.
+
 ### HP ZBook Fury 17 G7
 
 - [HP ZBook Fury 17 G7 setup and user guides](https://support.hp.com/us-en/product/setup-user-guides/hp-zbook-fury-17-g7-mobile-workstation/34386188)
