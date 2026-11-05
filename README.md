@@ -161,6 +161,96 @@ The HP ZBook Fury 17 G7 served as the PC platform for:
 
 An archived copy of the HP support/user-guide page is also stored in this branch.
 
+
+### PC Security Advisories and Vulnerability References
+
+The following resources support the security evaluation of the HP ZBook Fury 17 G7 workstation, Windows 11 Pro 25H2, Unity Editor 6000.3.22f1, and Unity Inference Engine 2.6.1 used in the dissertation experiments.
+
+These references document operating-system security protections, development-software vulnerabilities, Unity package security, and the applicability of published advisories to the local PC inference configuration.
+
+#### Microsoft Windows Security Documentation
+
+- [Windows Security](https://support.microsoft.com/en-us/windows/stay-protected-with-the-windows-security-app-ae70cccf-f6e7-23b4-1b9f-7bcd8c4bb3b9)
+  - Documents Microsoft Defender Antivirus, firewall protection, account protection, and device security.
+  - Used to interpret the security settings recorded on the experimental workstation.
+
+- [Windows Hello](https://learn.microsoft.com/en-us/windows/security/identity-protection/hello-for-business/)
+  - Documents Windows Hello authentication and PIN-based sign-in.
+  - Relevant to the PIN authentication used to access the workstation.
+
+- [BitLocker Drive Encryption](https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/)
+  - Documents Windows drive encryption and data protection.
+  - Used to evaluate the absence of BitLocker encryption on the internal system drive and connected external drives.
+
+- [Secure Boot](https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/oem-secure-boot)
+  - Describes UEFI Secure Boot and its role in verifying trusted boot components.
+  - Relevant because Secure Boot was disabled on the experimental workstation.
+
+- [Virtualization-Based Security](https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/oem-vbs)
+  - Documents Windows virtualization-based security capabilities.
+  - Relevant to the active virtualization-based security reported in Windows System Information.
+
+- [Kernel DMA Protection](https://learn.microsoft.com/en-us/windows/security/hardware-security/kernel-dma-protection-for-thunderbolt)
+  - Documents protection against unauthorized direct memory access through supported external interfaces.
+  - Relevant because Kernel DMA Protection was reported as enabled.
+
+- [Windows Camera Privacy Settings](https://support.microsoft.com/en-us/windows/manage-app-permissions-for-a-camera-in-windows-87ebc757-1f87-7bbf-84b5-0686afb6ca6b)
+  - Documents camera access permissions for Windows applications.
+  - Used to interpret desktop application camera access and Unity Editor's recorded camera usage.
+
+#### Unity Security Advisories
+
+- [Unity Editor 6000.3.22f1 Release Notes](https://unity.com/releases/editor/whats-new/6000.3.22f1)
+  - Documents the Unity Editor version used in the experiments.
+  - Provides version-specific release information for the development environment.
+
+- [Unity October 2026 — eMudhra Certificate Authority Compromise](https://unity.com/security/unity-emudhra-compromise)
+  - Documents a certificate-authority trust issue affecting specified Unity releases.
+  - Relevant to Unity Editor 6000.3.22f1 and the certificate trust environment.
+  - Applicability was reviewed in relation to the workstation's Windows security updates and certificate configuration.
+
+- [Unity October 2026 — Brotli Decoder Vulnerability](https://unity.com/security/unity-brotli-decoder-vulnerability)
+  - Documents a Brotli decompression vulnerability affecting specified Unity versions.
+  - Relevant to the installed Editor release and potentially affected package-management operations.
+  - No Brotli decompression operations were identified in the reviewed local inference scripts.
+
+- [Unity September 2025 — Security Update Advisory](https://unity.com/security/sept-2025-01)
+  - Documents CVE-2025-59489, affecting certain applications built with Unity.
+  - The installed Unity 6000.3.22f1 version followed the first patched release in the Unity 6000.3 release line.
+
+#### Unity Inference and Application Documentation
+
+- [Unity Inference Engine Documentation](https://docs.unity3d.com/Packages/com.unity.ai.inference@latest/)
+  - Documents model loading, inference workers, execution backends, and tensor processing.
+  - Relevant to Unity Inference Engine 2.6.1 and local ONNX model execution.
+  - The reviewed implementation loaded models through Unity ModelAsset references and executed inference using CPU or GPU Compute backends.
+
+- [Unity WebCamTexture Documentation](https://docs.unity3d.com/6000.3/Documentation/ScriptReference/WebCamTexture.html)
+  - Documents camera acquisition through Unity's WebCamTexture interface.
+  - Relevant to the Lumens VC-B2U USB camera used for local PC classification.
+  - The reviewed application selected the first enumerated camera, which corresponded to the Lumens camera when connected.
+
+#### Application to the Dissertation
+
+The PC security evaluation examined these references in relation to the actual experimental configuration:
+
+- HP ZBook Fury 17 G7 running Windows 11 Pro 25H2.
+- Windows Hello PIN authentication and administrator-level access.
+- Microsoft Defender, Windows Firewall, TPM 2.0, virtualization-based security, and Kernel DMA Protection.
+- Disabled Secure Boot and BitLocker drive encryption.
+- Unity Editor 6000.3.22f1 with Unity Inference Engine 2.6.1.
+- Locally stored ONNX models, Unity projects, and MNIST benchmark datasets.
+- Internal system-drive storage during experimentation and external Seagate drive storage after testing.
+- Lumens VC-B2U USB camera with Windows desktop camera access enabled.
+- Representative Unity C# scripts used for local inference and benchmarking.
+
+Published security advisories were evaluated according to the installed software versions, affected components, required attack conditions, and observed application behavior.
+
+The review identified operating-system protections, configuration-related security concerns, and relevant Unity advisories without demonstrating exploitation or unauthorized access.
+
+The PC security evaluation results are presented in Chapter IV, Section 4.7.2.2 of the dissertation. These references provide supporting technical documentation and vulnerability information rather than evidence that an attack occurred during experimentation.
+
+
 ### Google Cloud Run
 
 - [Google Cloud Run documentation](https://docs.cloud.google.com/run/docs)
