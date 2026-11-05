@@ -48,6 +48,9 @@ Cloud Infrastructure
 FPGA Security Evaluation
     └── Configuration review, vendor advisory applicability, and Vivado screenshots
 
+PC Security Evaluation
+    └── Windows security review, Unity advisories, and configuration screenshots
+
 Supporting Documentation
     └── Hardware manuals and specifications
 ```
@@ -443,7 +446,20 @@ The notebook records the qualitative review of JTAG and debugging access, bitstr
 
 Vivado project source and model-parameter logic are maintained in `MNIST-FPGA-Live-Classification-Code`. Vendor manuals, technical specifications, and security notices are referenced from `Manuals-and-Specifications` rather than duplicated here.
 
+# PC Security Evaluation
+
+## `PC-Security`
+
+Contains the PC security evaluation notebook and 14 supporting screenshots documenting the Windows 11 Pro 25H2 security configuration of the HP ZBook Fury 17 G7 workstation.
+
+The notebook records the qualitative review of operating-system protections, user authentication and administrator privileges, Secure Boot, TPM 2.0, BitLocker encryption, Unity software security advisories, local model and data storage, and Lumens VC-B2U USB camera access. It supports **Chapter IV, Section 4.7.2.2 — PC Deployment**.
+
+The screenshots document Windows security settings, account configuration, installed updates, camera permissions, and the organization of experimental files.
+
+Unity implementation code and model-loading scripts are maintained in `MNIST-Unity-Local-PC-Code`. Benchmark procedures and experimental data are maintained in `MNIST-Unity-Local-PC-Data-And-Notebook`. Microsoft and Unity security documentation and published advisories are referenced from `Manuals-and-Specifications` rather than duplicated here.
+
 ---
+
 
 # Manuals and Specifications
 
