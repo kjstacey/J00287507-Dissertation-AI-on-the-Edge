@@ -51,6 +51,9 @@ FPGA Security Evaluation
 PC Security Evaluation
     └── Windows security review, Unity advisories, and configuration screenshots
 
+Cloud-Assisted Inference Security Evaluation
+    └── Client network security, HTTPS/TLS, Cloud Run access, IAM permissions, container configuration, and logging
+
 Meta Quest 3S Security Evaluation
     └── Headset configuration, application permissions, development access, and security research
 
@@ -477,6 +480,22 @@ Unity implementation code is maintained in `MNIST-Unity-Local-Quest-Code`. Bench
 
 ---
 
+# Cloud-Assisted Inference Security Evaluation
+
+## `Cloud-Security`
+
+Contains the cloud-assisted inference security evaluation reproducibility notebook and seven supporting configuration screenshots.
+
+The notebook documents the qualitative evaluation of Ethernet and Wi-Fi connectivity, TLS and HTTPS communication, transmitted data, Cloud Run authentication and public access, IAM permissions, container configuration, application security, and operational logging. It supports **Chapter IV, Section 4.7.3 — Cloud-Assisted Inference Security Results**.
+
+The screenshots document the university network configurations used by the FPGA, PC, and Meta Quest 3S, along with Google Cloud Run networking, IAM permissions, container settings, and request logs.
+
+The evaluation identifies implemented protections and configuration-specific concerns, including public service invocation, broad runtime service account permissions, and limitations in the FPGA's TLS implementation.
+
+The Python inference service, dependencies, and existing deployment evidence are maintained in `Cloud`. Client implementation code and performance measurements remain in their respective implementation branches. Platform documentation and published security references are maintained in `Manuals-and-Specifications`.
+
+---
+
 
 # Manuals and Specifications
 
@@ -686,6 +705,26 @@ The notebook references the FPGA implementation code and the vendor security doc
 - `MNIST-Unity-Local-Quest-Data-And-Notebook`
 - `Manuals-and-Specifications`
 
+
+## 10. Cloud-Assisted Inference Security
+
+**Branch:** `Cloud-Security`
+
+- `Cloud_Security_Evaluation_Reproducibility.ipynb` — Security evaluation procedures, configuration findings, evidence, and limitations.
+- `wifi_settings.png` — University WPA2-protected research Wi-Fi configuration.
+- `open_settings.png` — University open Wi-Fi configuration used by the Quest 3S.
+- `ethernet_properties.png` — University wired-network environment.
+- `cloud_networking.png` — Cloud Run ingress, HTTPS endpoints, and network configuration.
+- `cloud_iam_permissions.png` — IAM roles and runtime service account permissions.
+- `cloud_containers.png` — Container deployment and resource settings.
+- `cloud_log.png` — Cloud Run operational request logs.
+
+**Related branches:**
+- `Cloud`
+- `FPGA-Security`
+- `PC-Security`
+- `Quest3s-security`
+- `Manuals-and-Specifications`
 
 
 # Code and Data Branch Convention
