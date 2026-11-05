@@ -463,6 +463,20 @@ Unity implementation code and model-loading scripts are maintained in `MNIST-Uni
 
 ---
 
+# Meta Quest 3S Security Evaluation
+
+## `Quest3s-security`
+
+Contains the Meta Quest 3S security evaluation reproducibility notebook, device configuration screenshots, and supporting security research.
+
+The notebook documents the qualitative review of headset authentication, Developer Mode, USB debugging authorization, Horizon OS updates, application deployment, local model and data storage, passthrough camera permissions, and published security vulnerabilities. It supports **Chapter IV, Section 4.7.2.3 — Meta Quest 3S Deployment**.
+
+The branch includes screenshots documenting the connected headset's firmware information and the November 5, 2026 operating-system update. It also contains Tahat et al. (2024), *VR Headset Ransomware Attack Vulnerability*, as supporting research concerning malicious application installation on standalone VR headsets.
+
+Unity implementation code is maintained in `MNIST-Unity-Local-Quest-Code`. Benchmark procedures and experimental data are maintained in `MNIST-Unity-Local-Quest-Data-And-Notebook`. Official Meta documentation and published vulnerability records are referenced from `Manuals-and-Specifications`.
+
+---
+
 
 # Manuals and Specifications
 
@@ -658,21 +672,20 @@ FPGA-Security
 The notebook references the FPGA implementation code and the vendor security documentation kept in their respective branches.
 
 
----
+## 9. Meta Quest 3S Security
 
-# Meta Quest 3S Security Evaluation
+**Branch:** `Quest3s-security`
 
-## `Quest3s-security`
+- `Quest3S_Security_Evaluation_Reproducibility.ipynb` — Device security evaluation procedures, observations, and limitations.
+- `Quest3S_device_info.png` — Meta Quest Developer Hub device and firmware information.
+- `Quest3S_OS_version.jpg` — Horizon OS version and automatic update settings.
+- `Tahat et al. - 2024 - VR Headset Ransomware Attack Vulnerability.pdf` — Supporting published research on standalone VR headset security.
 
-Contains the Meta Quest 3S security evaluation reproducibility notebook, device configuration screenshots, and supporting security research.
+**Related branches:**
+- `MNIST-Unity-Local-Quest-Code`
+- `MNIST-Unity-Local-Quest-Data-And-Notebook`
+- `Manuals-and-Specifications`
 
-The notebook documents the qualitative review of headset authentication, Developer Mode, USB debugging authorization, Horizon OS updates, application deployment, local model and data storage, passthrough camera permissions, and published security vulnerabilities. It supports **Chapter IV, Section 4.7.2.3 — Meta Quest 3S Deployment**.
-
-The branch includes screenshots documenting the connected headset's firmware information and the November 5, 2026 operating-system update. It also contains Tahat et al. (2024), *VR Headset Ransomware Attack Vulnerability*, as supporting research concerning malicious application installation on standalone VR headsets.
-
-Unity implementation code is maintained in `MNIST-Unity-Local-Quest-Code`. Benchmark procedures and experimental data are maintained in `MNIST-Unity-Local-Quest-Data-And-Notebook`. Official Meta documentation and published vulnerability records are referenced from `Manuals-and-Specifications`.
-
----
 
 
 # Code and Data Branch Convention
