@@ -51,6 +51,9 @@ FPGA Security Evaluation
 PC Security Evaluation
     └── Windows security review, Unity advisories, and configuration screenshots
 
+Meta Quest 3S Security Evaluation
+    └── Headset configuration, application permissions, development access, and security research
+
 Supporting Documentation
     └── Hardware manuals and specifications
 ```
@@ -654,7 +657,23 @@ FPGA-Security
 
 The notebook references the FPGA implementation code and the vendor security documentation kept in their respective branches.
 
+
 ---
+
+# Meta Quest 3S Security Evaluation
+
+## `Quest3s-security`
+
+Contains the Meta Quest 3S security evaluation reproducibility notebook, device configuration screenshots, and supporting security research.
+
+The notebook documents the qualitative review of headset authentication, Developer Mode, USB debugging authorization, Horizon OS updates, application deployment, local model and data storage, passthrough camera permissions, and published security vulnerabilities. It supports **Chapter IV, Section 4.7.2.3 — Meta Quest 3S Deployment**.
+
+The branch includes screenshots documenting the connected headset's firmware information and the November 5, 2026 operating-system update. It also contains Tahat et al. (2024), *VR Headset Ransomware Attack Vulnerability*, as supporting research concerning malicious application installation on standalone VR headsets.
+
+Unity implementation code is maintained in `MNIST-Unity-Local-Quest-Code`. Benchmark procedures and experimental data are maintained in `MNIST-Unity-Local-Quest-Data-And-Notebook`. Official Meta documentation and published vulnerability records are referenced from `Manuals-and-Specifications`.
+
+---
+
 
 # Code and Data Branch Convention
 
