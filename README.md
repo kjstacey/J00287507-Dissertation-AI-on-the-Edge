@@ -1,728 +1,80 @@
 
-# Machine Learning on the Edge: Dissertation Reproducibility Repository
+# PC Security Evaluation
 
-This repository contains source code, notebooks, experimental data, screenshots, logs, and supporting documentation for the dissertation:
+This branch contains the security evaluation notebook and supporting Windows configuration screenshots for the **HP ZBook Fury 17 G7** used in the local PC inference experiments.
 
-**Machine Learning on the Edge: Performance and Security Evaluation of Artificial Neural Network Implementations in Embedded Systems**
+The purpose of this branch is to preserve the evidence and documentation supporting the PC security evaluation presented in **Chapter IV, Section 4.7.2.2** of the dissertation.
 
-The repository documents the implementation and evaluation of artificial neural network inference across multiple deployment environments, including:
+## Files
 
-- FPGA-based local inference;
-- FPGA-assisted cloud inference;
-- Windows PC local inference;
-- Meta Quest 3S local inference;
-- Windows PC cloud-assisted inference; and
-- Meta Quest 3S cloud-assisted inference.
+The following notebook documents the evaluation procedure, evidence, findings, and limitations.
 
-The repository is organized primarily through Git branches. Branches separate model preparation, implementation code, experimental notebooks/data, camera setup, cloud integration, security evaluation, and supporting hardware documentation.
+| **File** | **Purpose** |
+| --- | --- |
+| `PC_Security_Evaluation_Reproducibility.ipynb` | Documents the PC security evaluation, including operating-system protections, account access, Unity software security, model and data storage, camera access, and published security advisories. |
 
-This structure preserves the development and measurement workflow without requiring every branch to duplicate the same shared files.
+### Windows Security and Configuration Screenshots
 
----
+The following screenshots were captured during the November 5, 2026, security review.
 
-## Repository Organization
+| **File** | **Purpose** |
+| --- | --- |
+| `security_at_a_glance.png` | Overall Windows Security protection status. |
+| `virus_and_threat_protection.png` | Antivirus protection, scan status, and security intelligence updates. |
+| `firewall_and_network_protection.png` | Windows Firewall configuration for domain, private, and public networks. |
+| `device_security.png` | Windows hardware and device-security features. |
+| `security_processor_details.png` | TPM 2.0 specifications and operational status. |
+| `system_settings.png` | Windows version, hardware configuration, Secure Boot status, virtualization-based security, and Kernel DMA Protection. |
+| `bit_locker.png` | BitLocker encryption status for the internal and external drives. |
+| `latest_updates.png` | Windows feature and security update history. |
 
-The major branch groups are:
+### Account and Access Screenshots
 
-```
-Model Preparation
-    └── MNIST model creation and export
+| **File** | **Purpose** |
+| --- | --- |
+| `user_account_info.png` | Experimental user account and administrator privileges. |
+| `all_user_info.png` | Windows account configuration and work-or-school account association. |
+| `sign_in_options.png` | Windows Hello PIN and available sign-in methods. |
+| `account_protection.png` | Windows Hello and Dynamic Lock status. |
 
-FPGA Camera Setup
-    └── Camera-only FPGA configuration and validation
+### Application and Experimental Data Screenshots
 
-FPGA MNIST Implementation
-    ├── Local classification
-    ├── Local live camera classification
-    ├── Cloud classification
-    └── Cloud live camera classification
+| **File** | **Purpose** |
+| --- | --- |
+| `camera_access_settings.png` | Windows camera privacy settings and Unity Editor camera-access history. |
+| `unity_project_directory_structure.png` | Organization of the Unity projects, ONNX model, benchmark datasets, and supporting research files. |
 
-Unity MNIST Implementation
-    ├── Local Windows PC
-    ├── Local Meta Quest 3S
-    └── Cloud PC / Quest 3S
+## Evaluation Scope
 
-Cloud Infrastructure
-    └── Server-side cloud inference implementation
+The notebook documents the security review of:
 
-FPGA Security Evaluation
-    └── Configuration review, vendor advisory applicability, and Vivado screenshots
+- Windows 11 Pro 25H2 security protections;
+- user authentication and administrator privileges;
+- Secure Boot, TPM, virtualization-based security, and BitLocker;
+- antivirus, firewall, and Windows updates;
+- Unity Editor 6000.3.22f1 and Unity Inference Engine 2.6.1;
+- locally stored ONNX models and experimental datasets;
+- internal and external drive access; and
+- Lumens VC-B2U USB camera access and image-input security.
 
-Supporting Documentation
-    └── Hardware manuals and specifications
-```
+The evaluation used configuration inspection, application source-code review, and published technical references. It did not include penetration testing or deliberate exploitation.
 
----
+## Related Branches
 
-# MNIST Model Preparation
+**MNIST-Unity-Local-PC-Code** contains the Unity implementation and C# scripts examined during the security review, including model loading, camera acquisition, and benchmark execution.
 
-The MNIST model branches document the shared neural network used as the starting point for the FPGA and Unity experiments.
+**MNIST-Unity-Local-PC-Data-And-Notebook** contains the experimental procedures, performance measurements, and supporting results for local PC inference.
 
-The model architecture is:
+**Manuals-and-Specifications** contains hardware documentation, Microsoft security references, Unity documentation, and published security advisories used to evaluate the experimental configuration.
 
-```
-784 input values
-    ↓
-Dense 30 — sigmoid
-    ↓
-Dense 20 — sigmoid
-    ↓
-Dense 10 — sigmoid
-    ↓
-argmax prediction
-```
+The PC-Security branch preserves the security evaluation record without duplicating these materials.
 
-The network contains **24,350 trainable parameters**.
+## Reproducibility
 
-The validated test-set accuracy of the shared model was:
+The Jupyter notebook documents the evaluation sequence, identifies the supporting screenshots and source-code evidence, and explains how published security advisories were evaluated against the actual workstation and Unity configuration.
 
-```
-9663 / 10000
-96.63%
-```
+The screenshots preserve the system settings observed on November 5, 2026. They document the configuration at the time of the security review rather than independently establishing that every setting remained unchanged throughout earlier experiments.
 
-## `MNIST-Models`
+Detailed security findings and their interpretation are maintained in the notebook and dissertation.
 
-Entry point for the shared MNIST model artifacts.
-
-This branch contains packaged versions of the model used by the FPGA and Unity workflows and provides navigation to the model-development branches.
-
-## `MNIST-Models-Code`
-
-Contains the Python source used for:
-
-- model training;
-- saved weight/bias handling;
-- model validation;
-- ZyNet/FPGA parameter preparation;
-- ONNX export;
-- MNIST binary test-data generation; and
-- accuracy verification.
-
-## `MNIST-Models-Notebooks-and-Data`
-
-Contains the notebooks and supporting artifacts documenting:
-
-- historical MNIST training;
-- ZyNet/FPGA model preparation;
-- ONNX model creation;
-- model validation; and
-- generated model artifacts.
-
----
-
-# FPGA Camera Setup
-
-The FPGA camera branches document the camera-only hardware pipeline used before neural-network inference was added.
-
-The baseline camera path is:
-
-```
-OV7670 Camera
-    ↓
-Camera Configuration
-    ↓
-Pixel Capture
-    ↓
-Frame BRAM
-    ↓
-VGA Output
-```
-
-This baseline intentionally excludes MNIST preprocessing, classification, cloud communication, and benchmark logic.
-
-## `FPGA-Camera-Setup`
-
-Entry point for the camera-only FPGA implementation.
-
-Includes the packaged Vivado project used as the baseline for later FPGA work.
-
-## `FPGA-Camera-Setup-Code`
-
-Contains the camera-related FPGA source files, including the VHDL and configuration files required for:
-
-- OV7670 camera configuration;
-- pixel capture;
-- frame-buffer storage;
-- VGA display; and
-- ZedBoard pin configuration.
-
-## `FPGA-Camera-Setup-Notebook-and-Data`
-
-Contains the notebook and visual evidence documenting:
-
-- camera wiring;
-- FPGA configuration;
-- camera debugging;
-- progressive VGA output validation; and
-- the final working camera pipeline.
-
----
-
-# FPGA MNIST Implementation
-
-The FPGA branches document local and cloud-assisted MNIST classification using the FPGA camera and model implementation.
-
-## `MNIST-FPGA`
-
-Entry point for the FPGA MNIST implementation.
-
-This branch connects the model, camera, local-classification, live-classification, and cloud-classification workflows.
-
----
-
-## FPGA Local Classification
-
-### `MNIST-FPGA-Local-Classification-Measurement-Code`
-
-Contains the source used for controlled FPGA local-classification measurements.
-
-### `MNIST-FPGA-Local-Classification-Measurement-Notebook-and-Data`
-
-Contains the corresponding measurement notebook, benchmark results, screenshots, logs, and supporting data.
-
----
-
-## FPGA Live Local Classification
-
-### `MNIST-FPGA-Live-Classification-Code`
-
-Contains the FPGA source used for live camera-to-local-classification operation.
-
-### `MNIST-FPGA-Live-Classification-Notebook-and-Data`
-
-Documents the live local-classification workflow and supporting experimental evidence.
-
----
-
-## FPGA Cloud Classification
-
-### `MNIST-FPGA-Cloud-Classification-Measurement-Code`
-
-Contains the FPGA/cloud client implementation used for controlled cloud-assisted classification measurements.
-
-### `MNIST-FPGA-Cloud-Classification-Measurement-Notebook-and-Data`
-
-Contains the controlled FPGA cloud benchmark documentation and experimental data.
-
----
-
-## FPGA Cloud Live Classification
-
-### `MNIST-FPGA-Cloud-Live-Classification-Code`
-
-Contains the FPGA/cloud implementation used for live camera-based cloud classification.
-
-### `MNIST-FPGA-Cloud-Live-Classification-Notebook-and-Data`
-
-Contains the live cloud-classification notebook, measurements, screenshots, and supporting data.
-
----
-
-# Unity MNIST Implementation
-
-The Unity branches document MNIST inference on Windows PC and Meta Quest 3S.
-
-The Unity work is divided into local and cloud-assisted execution.
-
-## `MNIST-Unity`
-
-Entry point for the Unity MNIST implementation.
-
-This branch serves as the navigation layer for the PC, Quest, and cloud Unity experiments.
-
----
-
-# Local Windows PC
-
-The PC implementation uses Unity Inference Engine to execute the ONNX model locally.
-
-Two backends were tested:
-
-```
-BackendType.CPU
-BackendType.GPUCompute
-```
-
-## `MNIST-Unity-Local-PC-Code`
-
-Contains the Unity source used for local Windows inference, including:
-
-- Unity scene;
-- C# benchmark scripts;
-- local camera pipeline;
-- ONNX model asset; and
-- MNIST test binaries.
-
-The same project was reused across CPU and GPU testing by changing the active inference backend and benchmark configuration.
-
-## `MNIST-Unity-Local-PC-Data-And-Notebook`
-
-Contains:
-
-- Unity project setup documentation;
-- CPU/GPU benchmark documentation;
-- accuracy evidence;
-- latency results;
-- throughput results;
-- process-memory evidence;
-- camera benchmarks;
-- power-measurement evidence;
-- screenshots; and
-- videos.
-
----
-
-# Local Meta Quest 3S
-
-The Quest implementation extends the working PC Unity project rather than recreating it from scratch.
-
-The Quest-specific changes include:
-
-```
-Windows build
-    → Android / Quest build
-
-WebCamTexture
-    → PassthroughCameraAccess
-
-Desktop Main Camera
-    → Meta XR rig
-
-Mouse interaction
-    → XR poke and ray interaction
-```
-
-## `MNIST-Unity-Local-Quest3S-Code`
-
-Contains the Quest-specific code delta:
-
-- `QuestCameraMNISTInference.cs`;
-- `QuestCameraPreview.cs`;
-- `SecondScene.unity`;
-- Unity metadata files; and
-- the Quest-enabled package manifest.
-
-The shared PC model and benchmark assets are referenced from the local PC implementation rather than duplicated.
-
-## `MNIST-Unity-Local-Quest3S-Data-And-Notebook`
-
-Contains:
-
-- PC-to-Quest conversion documentation;
-- Android build configuration;
-- Meta XR SDK setup;
-- XR rig configuration;
-- Canvas conversion;
-- poke and ray interaction;
-- MQDH deployment workflow;
-- GPU benchmarks;
-- CPU benchmarks;
-- tethered testing;
-- untethered testing;
-- OVR Metrics logs; and
-- Quest benchmark screenshots.
-
-The local Quest benchmark sequence includes:
-
-```
-GPU tethered
-GPU untethered
-CPU tethered
-CPU untethered
-```
-
----
-
-# Unity Cloud-Assisted Inference
-
-The cloud Unity implementation reuses the existing PC and Quest scenes.
-
-No separate cloud-specific scenes were created.
-
-The primary change is the inference path:
-
-```
-Local:
-Input
-    ↓
-Unity Inference Engine
-    ↓
-Local prediction
-```
-
-```
-Cloud:
-Input
-    ↓
-HTTP request
-    ↓
-Google Cloud Run
-    ↓
-Prediction response
-```
-
-## `MNIST-Unity-Cloud-Code`
-
-Contains the four cloud-specific Unity scripts:
-
-```
-CloudMNISTSingleTest.cs
-CloudMNISTBenchmark.cs
-CloudCameraMNISTInference.cs
-QuestCloudCameraMNISTInference.cs
-```
-
-These provide:
-
-- single-image cloud validation;
-- controlled 1,000-image cloud benchmarking;
-- PC webcam-to-cloud inference; and
-- Quest passthrough-camera-to-cloud inference.
-
-## `MNIST-Unity-Cloud-Data-And-Notebook`
-
-Contains the combined PC and Quest cloud benchmark documentation.
-
-PC evidence includes:
-
-- controlled cloud benchmarks;
-- camera benchmarks;
-- editor versus standalone-build observations;
-- Windows memory evidence;
-- power-measurement videos; and
-- Internet-dependency evidence.
-
-Quest evidence includes:
-
-- tethered cloud benchmarks;
-- untethered cloud benchmarks;
-- controlled accuracy/latency/throughput;
-- frozen-camera benchmarks;
-- end-to-end camera benchmarks;
-- live camera classification;
-- live camera throughput; and
-- OVR Metrics telemetry.
-
-The cloud controlled benchmark evaluates:
-
-```
-1000 MNIST images
-```
-
-The observed cloud subset accuracy was:
-
-```
-957 / 1000
-95.70%
-```
-
-This result is kept distinct from the 10,000-image local model validation result.
-
----
-
-# Cloud Infrastructure
-
-## `Cloud`
-
-Contains the server-side cloud inference implementation and deployment materials used by the FPGA and Unity cloud-assisted experiments.
-
-The Unity clients communicate with the deployed prediction service through HTTP requests.
-
-The client-side MNIST representation is converted to a compact 784-byte request before transmission.
-
----
-
-# FPGA Security Evaluation
-
-## `FPGA-Security`
-
-Contains the FPGA security evaluation notebook and two Vivado 2018.1 screenshots documenting the bitstream-generation workflow and reviewed security settings.
-
-The notebook records the qualitative review of JTAG and debugging access, bitstream protection, pretrained model parameters, Zynq-7000 security advisories, ARM Cortex-A9 vulnerabilities, development software, and OV7670 image acquisition. It supports **Chapter IV, Section 4.7.2.1 — FPGA Deployment**.
-
-Vivado project source and model-parameter logic are maintained in `MNIST-FPGA-Live-Classification-Code`. Vendor manuals, technical specifications, and security notices are referenced from `Manuals-and-Specifications` rather than duplicated here.
-
----
-
-# Manuals and Specifications
-
-## `Manuals-and-Specifications`
-
-Contains archived hardware documentation and links to supporting technical references used during implementation and measurement.
-
-Examples include documentation for:
-
-- ZedBoard;
-- OV7670 camera;
-- P4400 Kill A Watt meter;
-- HP ZBook workstation;
-- Meta Quest 3S;
-- Unity;
-- Meta Quest development tools;
-- Xilinx Vivado / SDK; and
-- related hardware and software environments.
-
-These materials support reproducibility of the platform configuration and measurement procedures.
-
----
-
-# Experimental Design
-
-The repository separates several measurement categories.
-
-## Model Correctness
-
-```
-Classification accuracy
-```
-
-## Controlled Performance
-
-```
-Inference latency
-Throughput
-```
-
-## Resource Requirements
-
-```
-Process memory
-Device memory
-FPGA hardware resources
-```
-
-## Power and Energy
-
-```
-Whole-system PC power
-FPGA power
-Quest device telemetry
-```
-
-## Camera/Application Performance
-
-```
-Frozen-camera inference
-End-to-end camera latency
-Live camera throughput
-```
-
-## Deployment Conditions
-
-Where applicable, evidence distinguishes:
-
-```
-CPU vs GPU
-Local vs cloud
-Editor vs standalone build
-Quest tethered vs untethered
-Controlled input vs live camera
-```
-
----
-
-# Measurement Boundaries
-
-Care should be taken when comparing measurements from different deployment environments because not all latency values represent the same boundary.
-
-### Local Unity inference
-
-Typically measures:
-
-```
-worker.Schedule()
-    ↓
-synchronous output readback
-```
-
-### Cloud inference
-
-Measures:
-
-```
-request transmission
-    ↓
-network
-    ↓
-cloud processing
-    ↓
-response transmission
-```
-
-### Frozen-camera benchmark
-
-Uses an already prepared camera-derived input.
-
-### End-to-end camera benchmark
-
-Includes camera acquisition and preprocessing before prediction.
-
-The notebooks in each branch document the exact measurement procedure used for that environment.
-
----
-
-# Recommended Navigation
-
-A reader interested in reproducing the experiments can follow this general order.
-
-## 1. Shared Model
-
-```
-MNIST-Models
-    ↓
-MNIST-Models-Code
-    ↓
-MNIST-Models-Notebooks-and-Data
-```
-
-## 2. FPGA Camera
-
-```
-FPGA-Camera-Setup
-    ↓
-FPGA-Camera-Setup-Code
-    ↓
-FPGA-Camera-Setup-Notebook-and-Data
-```
-
-## 3. FPGA MNIST
-
-```
-MNIST-FPGA
-    ↓
-Local Classification
-    ↓
-Live Classification
-    ↓
-Cloud Classification
-    ↓
-Cloud Live Classification
-```
-
-## 4. Unity Local PC
-
-```
-MNIST-Unity
-    ↓
-MNIST-Unity-Local-PC-Code
-    ↓
-MNIST-Unity-Local-PC-Data-And-Notebook
-```
-
-## 5. Unity Local Quest 3S
-
-```
-MNIST-Unity-Local-Quest3S-Code
-    ↓
-MNIST-Unity-Local-Quest3S-Data-And-Notebook
-```
-
-## 6. Unity Cloud
-
-```
-MNIST-Unity-Cloud-Code
-    ↓
-MNIST-Unity-Cloud-Data-And-Notebook
-```
-
----
-
-## 7. FPGA Security
-
-```
-FPGA-Security
-    ├── FPGA security evaluation notebook
-    └── Vivado bitstream evidence screenshots
-```
-
-The notebook references the FPGA implementation code and the vendor security documentation kept in their respective branches.
-
----
-
-# Code and Data Branch Convention
-
-Where practical, implementation areas are separated into:
-
-```
-...-Code
-```
-
-and:
-
-```
-...-Notebook-and-Data
-```
-
-branches.
-
-### Code branches
-
-Contain source code and implementation-specific assets.
-
-### Notebook/Data branches
-
-Contain:
-
-- explanatory notebooks;
-- benchmark procedures;
-- screenshots;
-- CSV files;
-- hardware/resource logs;
-- photographs;
-- videos; and
-- other experimental evidence.
-
-Entry-point branches such as `MNIST-Models`, `FPGA-Camera-Setup`, `MNIST-FPGA`, and `MNIST-Unity` provide navigation or packaged artifacts without duplicating every development file.
-
----
-
-# Reproducibility Notes
-
-This repository preserves the implementation as it evolved during the dissertation research.
-
-In some cases:
-
-- the same Unity project was reused across CPU and GPU configurations;
-- Quest functionality was added to the existing PC project;
-- cloud functionality was added by replacing local inference components;
-- screenshots preserve both Editor and standalone-build execution;
-- multiple screenshots represent repeated trials rather than duplicate evidence; and
-- device telemetry logs cover measurement sessions rather than one isolated benchmark.
-
-The notebooks document these relationships so that the repository reflects the actual experimental workflow rather than an artificial reconstruction of separate projects.
-
----
-
-# Current Repository Scope
-
-The branches listed above document the **MNIST implementation and evaluation workflow**, including the FPGA security evaluation.
-
-Additional dissertation datasets and implementation branches may be added using the same general organizational pattern as the repository is completed.
-
----
-
-# License
-
-See the `LICENSE` file included in the repository and individual branches where applicable.
-
----
-
-# Dissertation Context
-
-This repository serves as the reproducibility archive for the dissertation research.
-
-The repository provides the implementation and experimental evidence.
-
-The dissertation provides the formal:
-
-- research questions;
-- methodology;
-- statistical analysis;
-- cross-platform results;
-- performance interpretation;
-- security analysis;
-- deployment trade-offs; and
-- conclusions.
-
-Repository artifacts should therefore be interpreted together with the corresponding dissertation methodology and results sections.
+Cloud communication, HTTPS, and Google Cloud Run security are addressed separately in the cloud-assisted security evaluation.
