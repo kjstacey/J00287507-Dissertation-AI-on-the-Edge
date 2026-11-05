@@ -251,6 +251,48 @@ The review identified operating-system protections, configuration-related securi
 The PC security evaluation results are presented in Chapter IV, Section 4.7.2.2 of the dissertation. These references provide supporting technical documentation and vulnerability information rather than evidence that an attack occurred during experimentation.
 
 
+### Meta Quest 3S Security Advisories and Vulnerability References
+
+The following references support the security evaluation of the Meta Quest 3S used for local neural network inference. They address Horizon OS software updates, application security testing, published vulnerabilities, and security concerns associated with development interfaces.
+
+#### Meta Platform and Application Security Documentation
+
+| Reference | Description |
+|---|---|
+| [Meta Horizon OS Developer Release Notes](https://developers.meta.com/vr/release-notes/) | Official release documentation used to examine operating-system revisions and updates relevant to the experimental headset. |
+| [Meta Security Vulnerability Testing](https://developers.meta.com/vr/resources/publish-security-scan/) | Describes Meta's automated security vulnerability testing for application packages submitted through its release process. |
+
+#### Published Vulnerability Records
+
+| Reference | Description |
+|---|---|
+| [NVD — CVE-2026-92172](https://nvd.nist.gov/vuln/detail/CVE-2026-92172) | Documents a vulnerability involving privileged application identity handling in earlier Meta Horizon OS releases. |
+| [NVD — CVE-2026-92173](https://nvd.nist.gov/vuln/detail/CVE-2026-92173) | Documents a separate vulnerability involving privileged application identity handling in earlier Meta Horizon OS releases. |
+
+The published vulnerability records were reviewed for applicability to the experimental headset. Neither vulnerability was established as affecting the documented Horizon OS 2.9 configuration. No exploitation testing was performed.
+
+#### Supporting Security Research
+
+| Reference | Description |
+|---|---|
+| [Tahat et al. (2024) — VR Headset Ransomware Attack Vulnerability](https://doi.org/10.1109/CCECE59415.2024.10667339) | IEEE conference paper examining Android ransomware execution on the Oculus Quest 2. The research provides supporting evidence of security risks associated with installing untrusted applications through development interfaces. |
+
+The Tahat et al. paper investigated an earlier headset model and operating-system configuration. Its findings provide context for potential risks but do not establish that the experimental Quest 3S was susceptible to the tested ransomware.
+
+#### Application to the Dissertation
+
+These references support **Chapter IV, Section 4.7.2.3 — Meta Quest 3S Deployment**, including the discussion of:
+
+- Horizon OS version information and automatic software updates.
+- Application security scanning and direct deployment through Unity Build and Run.
+- Published operating-system vulnerabilities and their applicability.
+- Developer Mode, USB debugging, and risks associated with untrusted application installation.
+- Limitations of the qualitative security evaluation.
+
+The `Quest3s-security` branch contains the reproducibility notebook, device configuration screenshots, and a copy of the Tahat et al. publication. Unity implementation code and performance results remain in the corresponding Quest local-inference branches.
+
+The references document available security mechanisms and previously published findings; they do not establish that the experimental headset was free from vulnerabilities.
+
 ### Google Cloud Run
 
 - [Google Cloud Run documentation](https://docs.cloud.google.com/run/docs)
