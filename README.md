@@ -26,7 +26,8 @@ The major branch groups are:
 
 ```
 Model Preparation
-    └── MNIST model creation and export
+    ├── MNIST model creation and export
+    └── EMNIST Balanced model training, validation, and selection
 
 FPGA Camera Setup
     └── Camera-only FPGA configuration and validation
@@ -117,6 +118,83 @@ Contains the notebooks and supporting artifacts documenting:
 - ONNX model creation;
 - model validation; and
 - generated model artifacts.
+
+# EMNIST Model Preparation
+
+The EMNIST model branches document the development and selection of a neural network for the EMNIST Balanced dataset. The dataset extends handwritten-digit recognition to 47 classes of handwritten digits and letters.
+
+The selected compact CNN architecture is:
+
+```text
+28 × 28 × 1 input
+    ↓
+Conv 3 × 3 — 16 channels — ReLU
+    ↓
+Max Pool 2 × 2
+    ↓
+Conv 3 × 3 — 32 channels — ReLU
+    ↓
+Max Pool 2 × 2
+    ↓
+Conv 3 × 3 — 64 channels — ReLU
+    ↓
+Global Average Pooling
+    ↓
+Dense 47
+    ↓
+argmax prediction
+```
+
+The network contains **26,351 trainable parameters**.
+
+The validated test-set accuracy of the selected model was:
+
+```text
+16,327 / 18,800
+86.85%
+```
+
+The compact CNN was selected following experiments with fully connected networks and larger CNN architectures. Although the improved CNN achieved higher classification accuracy, the compact model reduced computational complexity and provided a suitable starting point for FPGA implementation.
+
+## `EMNIST-Models`
+
+Entry point for the selected EMNIST Balanced reference model.
+
+This branch contains the trained compact CNN checkpoint and training summary and provides navigation to the model-development branches.
+
+The reference model is preserved in PyTorch format. Additional representations, including a Unity-compatible ONNX model, may be added as implementation work progresses.
+
+## `EMNIST-Models-Code`
+
+Contains the Python source used for:
+
+- dataset verification and orientation correction;
+- fully connected model training;
+- reference CNN training;
+- improved CNN training;
+- compact CNN development;
+- model validation and comparison; and
+- preliminary quantization evaluation.
+
+The original EMNIST dataset is referenced through the official NIST source rather than duplicated in the repository.
+
+## `EMNIST-Models-Data-and-Notebook`
+
+Contains the reproducibility notebook and supporting artifacts documenting:
+
+- dataset verification;
+- historical fully connected network experiments;
+- CNN model development;
+- training and validation histories;
+- saved model checkpoints;
+- classification accuracy and confusion matrices;
+- model-selection comparisons;
+- preliminary quantization results; and
+- experimental screenshots.
+
+The notebook documents the progression from initial models to the selected compact CNN and preserves the evidence supporting model selection.
+
+The EMNIST model-development branches are separate from the subsequent FPGA and Unity implementation branches. Hardware-specific integer inference, Verilog implementation, Unity integration, and performance measurements are documented in their respective workflows.
 
 ---
 
@@ -618,7 +696,7 @@ The notebooks in each branch document the exact measurement procedure used for t
 
 A reader interested in reproducing the experiments can follow this general order.
 
-## 1. Shared Model
+## 1. Shared Models
 
 ```
 MNIST-Models
@@ -626,6 +704,14 @@ MNIST-Models
 MNIST-Models-Code
     ↓
 MNIST-Models-Notebooks-and-Data
+```
+
+```text
+EMNIST-Models
+    ↓
+EMNIST-Models-Code
+    ↓
+EMNIST-Models-Data-and-Notebook
 ```
 
 ## 2. FPGA Camera
@@ -760,7 +846,7 @@ Contain:
 - videos; and
 - other experimental evidence.
 
-Entry-point branches such as `MNIST-Models`, `FPGA-Camera-Setup`, `MNIST-FPGA`, and `MNIST-Unity` provide navigation or packaged artifacts without duplicating every development file.
+Entry-point branches such as `MNIST-Models`, `EMNIST-Models`, `FPGA-Camera-Setup`, `MNIST-FPGA`, and `MNIST-Unity` provide navigation or packaged artifacts without duplicating every development file.
 
 ---
 
@@ -783,9 +869,15 @@ The notebooks document these relationships so that the repository reflects the a
 
 # Current Repository Scope
 
-The branches listed above document the **MNIST implementation and evaluation workflow**, including the FPGA security evaluation.
+The repository documents the **MNIST implementation and evaluation workflow**, including the FPGA, Windows PC, Meta Quest 3S, cloud-assisted inference, and security evaluation branches.
 
-Additional dissertation datasets and implementation branches may be added using the same general organizational pattern as the repository is completed.
+The repository also includes the **EMNIST Balanced model-development workflow**, consisting of dataset preparation, training, validation, model comparison, and selection of the compact CNN for subsequent implementation.
+
+The EMNIST model branches currently preserve the selected PyTorch reference model, training code, reproducibility notebook, and supporting experimental evidence.
+
+Additional EMNIST FPGA and Unity implementation materials, including validated deployment-specific model representations, will be incorporated as the work is completed.
+
+SVHN, CIFAR-10, and other remaining dissertation implementation materials may be added using the same general branch organization.
 
 ---
 
