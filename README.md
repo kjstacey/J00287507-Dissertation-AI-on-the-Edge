@@ -31,7 +31,7 @@ The preparation scripts verify the dataset structure, correct the orientation of
 
 ### EMNIST Balanced Class Examples
 
-![EMNIST Balanced class examples](images/EMNIST_Balanced_Class_Examples.png)
+![EMNIST Balanced class examples](EMNIST_Balanced_Class_Examples.png)
 
 The figure shows one upright example from each of the 47 classification categories.
 
