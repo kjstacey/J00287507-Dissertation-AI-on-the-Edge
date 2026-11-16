@@ -1,132 +1,143 @@
+# EMNIST FPGA Live Classification — Code
 
-# Machine Learning on the Edge: Dissertation Reproducibility Repository
-
-This repository contains source code, notebooks, experimental data, screenshots, logs, and supporting documentation for the dissertation:
+This branch contains the FPGA source code, model parameters, memory configurations, hardware constraints, and bitstream used for live camera-based EMNIST Balanced classification as part of the dissertation:
 
 **Machine Learning on the Edge: Performance and Security Evaluation of Artificial Neural Network Implementations in Embedded Systems**
 
-The repository documents the implementation and evaluation of artificial neural network inference across multiple deployment environments, including:
+The implementation integrates the compact EMNIST convolutional neural network (CNN) with the OV7670 camera system on the ZedBoard Rev E.
 
-- FPGA-based local inference;
-- FPGA-assisted cloud inference;
-- Windows PC local inference;
-- Meta Quest 3S local inference;
-- Windows PC cloud-assisted inference; and
-- Meta Quest 3S cloud-assisted inference.
+The design builds upon the existing FPGA camera configuration developed during the MNIST experiments. The original live-camera display, image capture, stored-thumbnail display, and camera configuration components were preserved while the MNIST neural network was replaced with the compact EMNIST CNN.
 
-The repository is organized primarily through Git branches. Branches separate model preparation, implementation code, experimental notebooks/data, camera setup, cloud integration, security evaluation, and supporting hardware documentation.
-
-This structure preserves the development and measurement workflow without requiring every branch to duplicate the same shared files.
+The implementation provides functional validation of the camera-to-CNN pipeline using physical character images.
 
 ---
 
-## Repository Organization
+## Implementation Overview
 
-The major branch groups are:
-
-```
-Model Preparation
-    ├── MNIST model creation and export
-    └── EMNIST Balanced model training, validation, and selection
-
-FPGA Camera Setup
-    └── Camera-only FPGA configuration and validation
-
-FPGA MNIST Implementation
-    ├── Local classification
-    ├── Local live camera classification
-    ├── Cloud classification
-    └── Cloud live camera classification
-
-Unity MNIST Implementation
-    ├── Local Windows PC
-    ├── Local Meta Quest 3S
-    └── Cloud PC / Quest 3S
-
-Cloud Infrastructure
-    └── Server-side cloud inference implementation
-
-FPGA Security Evaluation
-    └── Configuration review, vendor advisory applicability, and Vivado screenshots
-
-PC Security Evaluation
-    └── Windows security review, Unity advisories, and configuration screenshots
-
-Cloud-Assisted Inference Security Evaluation
-    └── Client network security, HTTPS/TLS, Cloud Run access, IAM permissions, container configuration, and logging
-
-Meta Quest 3S Security Evaluation
-    └── Headset configuration, application permissions, development access, and security research
-
-Supporting Documentation
-    └── Hardware manuals and specifications
-```
-
----
-
-# MNIST Model Preparation
-
-The MNIST model branches document the shared neural network used as the starting point for the FPGA and Unity experiments.
-
-The model architecture is:
-
-```
-784 input values
-    ↓
-Dense 30 — sigmoid
-    ↓
-Dense 20 — sigmoid
-    ↓
-Dense 10 — sigmoid
-    ↓
-argmax prediction
-```
-
-The network contains **24,350 trainable parameters**.
-
-The validated test-set accuracy of the shared model was:
-
-```
-9663 / 10000
-96.63%
-```
-
-## `MNIST-Models`
-
-Entry point for the shared MNIST model artifacts.
-
-This branch contains packaged versions of the model used by the FPGA and Unity workflows and provides navigation to the model-development branches.
-
-## `MNIST-Models-Code`
-
-Contains the Python source used for:
-
-- model training;
-- saved weight/bias handling;
-- model validation;
-- ZyNet/FPGA parameter preparation;
-- ONNX export;
-- MNIST binary test-data generation; and
-- accuracy verification.
-
-## `MNIST-Models-Notebooks-and-Data`
-
-Contains the notebooks and supporting artifacts documenting:
-
-- historical MNIST training;
-- ZyNet/FPGA model preparation;
-- ONNX model creation;
-- model validation; and
-- generated model artifacts.
-
-# EMNIST Model Preparation
-
-The EMNIST model branches document the development and selection of a neural network for the EMNIST Balanced dataset. The dataset extends handwritten-digit recognition to 47 classes of handwritten digits and letters.
-
-The selected compact CNN architecture is:
+The live classification pipeline is:
 
 ```text
-28 × 28 × 1 input
+OV7670 Camera
+    ↓
+Camera Configuration and Pixel Capture
+    ↓
+112 × 112 Region of Interest
+    ↓
+Downsampling and Thresholding
+    ↓
+28 × 28 Stored Image
+    ├── VGA Thumbnail Display
+    └── CNN Input Memory
+            ↓
+        Conv1 — ReLU — MaxPool1
+            ↓
+        Conv2 — ReLU — MaxPool2
+            ↓
+        Conv3 — ReLU
+            ↓
+        Global Average Pooling
+            ↓
+        Fully Connected 47-Class Output
+            ↓
+        Predicted Class
+            ↓
+        ZedBoard LEDs
+```
+
+The FPGA performs camera acquisition, input preparation, and CNN inference locally. The implementation does not require cloud communication or a connected development computer to perform classification after programming.
+
+---
+
+# Hardware and Development Environment
+
+The implementation used:
+
+- ZedBoard Rev E with Zynq-7000 XC7Z020 FPGA;
+- OV7670 camera module;
+- VGA display;
+- Xilinx Vivado 2018.1;
+- VHDL for the camera and top-level integration;
+- Verilog for the CNN processing modules; and
+- memory initialization files containing trained model parameters.
+
+The design used the existing camera clock-generation components and a 25 MHz CNN inference clock.
+
+---
+
+# Repository Contents
+
+The branch preserves the source files required for the live classification implementation.
+
+## Camera and Integration Sources
+
+The camera subsystem originated from the working camera configuration used during the MNIST experiments.
+
+The VHDL components include:
+
+| Component | Purpose |
+|---|---|
+| `ov7670_top.vhd` | Camera/CNN integration, image preprocessing, capture control, and LED output |
+| `ov7670_capture.vhd` | OV7670 pixel capture |
+| `ov7670_controller.vhd` | Camera initialization and configuration |
+| `ov7670_registers.vhd` | Camera register settings |
+| `i2c_sender.vhd` | Camera configuration communication |
+| `vga.vhd` | VGA display output |
+| `clocking.vhd` | Clock generation |
+| `debounce.vhd` | Button input handling |
+
+Several camera components retain their original filenames and internal structure from the initial camera project.
+
+The final `ov7670_top.vhd` includes the compact CNN interface and uses the restored MNIST thresholding procedure that was retained for the working live EMNIST implementation.
+
+## CNN Verilog Sources
+
+The compact CNN was implemented through the following hierarchy:
+
+**Complete network and integration stages**
+
+```text
+emnist_complete_cnn_bram_top.v
+conv1_bram_top.v
+conv1_pool1_bram_top.v
+conv1_pool1_conv2_bram_top.v
+conv1_pool1_conv2_pool2_bram_top.v
+conv1_pool1_conv2_pool2_conv3_bram_top.v
+conv1_pool1_conv2_pool2_conv3_gap_bram_top.v
+```
+
+**Convolution controllers and arithmetic**
+
+```text
+conv1_controller_sync.v
+conv2_controller_sync.v
+conv3_controller_sync.v
+
+conv3x3_mac_q24.v
+conv144_mac_q24.v
+conv288_mac_q24.v
+```
+
+**Pooling and classification**
+
+```text
+maxpool1_controller.v
+maxpool2_controller.v
+gap64_controller.v
+fc47_controller.v
+```
+
+The CNN arithmetic and trained parameters were carried forward from the previously verified standalone implementation.
+
+The camera integration modified the input-memory interface so that the first convolutional layer could process captured image data rather than the original fixed-image ROM.
+
+---
+
+# Model Architecture
+
+The implemented model is the compact CNN selected during EMNIST model development.
+
+```text
+28 × 28 × 1 Input
     ↓
 Conv 3 × 3 — 16 channels — ReLU
     ↓
@@ -145,763 +156,219 @@ Dense 47
 argmax prediction
 ```
 
-The network contains **26,351 trainable parameters**.
+The original trained model contains **26,351 trainable parameters**.
 
-The validated test-set accuracy of the selected model was:
+The PyTorch reference model achieved **86.85% classification accuracy** on the complete EMNIST Balanced test set.
+
+That result represents software reference-model accuracy, not camera-based FPGA classification accuracy.
+
+The training scripts, original checkpoint, and model-development experiments are maintained in the `EMNIST-Models` branch group.
+
+---
+
+# Model Parameter Files
+
+The CNN uses memory initialization files containing the quantized model parameters.
+
+| File | Purpose |
+|---|---|
+| `weights.mem` | First convolutional layer weights |
+| `bias.mem` | First convolutional layer biases |
+| `weights2.mem` | Second convolutional layer weights |
+| `bias2.mem` | Second convolutional layer biases |
+| `weights3.mem` | Third convolutional layer weights |
+| `bias3.mem` | Third convolutional layer biases |
+| `fc_weights.mem` | Fully connected layer weights |
+| `fc_bias.mem` | Fully connected layer biases |
+
+The implementation uses integer arithmetic and layer-specific fixed-point scaling.
+
+The Q24 scaling multipliers are defined within the working convolution RTL rather than loaded from separate multiplier memory files.
+
+The original `image.mem` file used for standalone CNN verification was replaced by a writable input memory populated with camera-derived pixels.
+
+---
+
+# Camera Image Preparation
+
+The camera preprocessing follows the working procedure developed for MNIST.
+
+A 112 × 112 region of the captured image is sampled at four-pixel intervals in both directions to produce a 28 × 28 representation.
+
+The region begins at camera column 24 and row 4.
+
+The selected pixels are thresholded using the upper four bits of the captured RGB444 representation.
+
+The thresholding procedure produces:
 
 ```text
-16,327 / 18,800
-86.85%
+Pixel value > 7
+    → 127
+
+Pixel value ≤ 7
+    → 0
 ```
 
-The compact CNN was selected following experiments with fully connected networks and larger CNN architectures. Although the improved CNN achieved higher classification accuracy, the compact model reduced computational complexity and provided a suitable starting point for FPGA implementation.
+The resulting 784-byte image is stored for display and supplied to the CNN input memory.
 
-## `EMNIST-Models`
+The stored thumbnail can be inspected through the VGA display before or during classification.
 
-Entry point for the selected EMNIST Balanced reference model.
-
-This branch contains the trained compact CNN checkpoint and training summary and provides navigation to the model-development branches.
-
-The reference model is preserved in PyTorch format. Additional representations, including a Unity-compatible ONNX model, may be added as implementation work progresses.
-
-## `EMNIST-Models-Code`
-
-Contains the Python source used for:
-
-- dataset verification and orientation correction;
-- fully connected model training;
-- reference CNN training;
-- improved CNN training;
-- compact CNN development;
-- model validation and comparison; and
-- preliminary quantization evaluation.
-
-The original EMNIST dataset is referenced through the official NIST source rather than duplicated in the repository.
-
-## `EMNIST-Models-Data-and-Notebook`
-
-Contains the reproducibility notebook and supporting artifacts documenting:
-
-- dataset verification;
-- historical fully connected network experiments;
-- CNN model development;
-- training and validation histories;
-- saved model checkpoints;
-- classification accuracy and confusion matrices;
-- model-selection comparisons;
-- preliminary quantization results; and
-- experimental screenshots.
-
-The notebook documents the progression from initial models to the selected compact CNN and preserves the evidence supporting model selection.
-
-The EMNIST model-development branches are separate from the subsequent FPGA and Unity implementation branches. Hardware-specific integer inference, Verilog implementation, Unity integration, and performance measurements are documented in their respective workflows.
+An alternative grayscale conversion was investigated during integration, but the original thresholding procedure was retained for the working functional demonstration.
 
 ---
 
-# FPGA Camera Setup
+# Camera Controls and Classification Output
 
-The FPGA camera branches document the camera-only hardware pipeline used before neural-network inference was added.
+The implementation preserves the working camera controls.
 
-The baseline camera path is:
+| Control | Function |
+|---|---|
+| Capture button | Freezes or releases the captured image |
+| Stored-view switch OFF | Displays the live camera image |
+| Stored-view switch ON | Displays the stored 28 × 28 thumbnail |
+| LEDs 0–5 | Display the predicted EMNIST class as a binary value |
+| LED 6 | Indicates completion of CNN inference |
+| LED 7 | Indicates the CNN overflow diagnostic |
 
-```
-OV7670 Camera
-    ↓
-Camera Configuration
-    ↓
-Pixel Capture
-    ↓
-Frame BRAM
-    ↓
-VGA Output
-```
+The network supports 47 output classes, represented by class IDs 0–46.
 
-This baseline intentionally excludes MNIST preprocessing, classification, cloud communication, and benchmark logic.
+The predicted class is displayed using six LEDs rather than decoded into a character on the VGA display.
 
-## `FPGA-Camera-Setup`
-
-Entry point for the camera-only FPGA implementation.
-
-Includes the packaged Vivado project used as the baseline for later FPGA work.
-
-## `FPGA-Camera-Setup-Code`
-
-Contains the camera-related FPGA source files, including the VHDL and configuration files required for:
-
-- OV7670 camera configuration;
-- pixel capture;
-- frame-buffer storage;
-- VGA display; and
-- ZedBoard pin configuration.
-
-## `FPGA-Camera-Setup-Notebook-and-Data`
-
-Contains the notebook and visual evidence documenting:
-
-- camera wiring;
-- FPGA configuration;
-- camera debugging;
-- progressive VGA output validation; and
-- the final working camera pipeline.
+The EMNIST Balanced character mapping is documented in the model-development materials.
 
 ---
 
-# FPGA MNIST Implementation
+# Vivado Configuration
 
-The FPGA branches document local and cloud-assisted MNIST classification using the FPGA camera and model implementation.
+The project uses the original camera memory IP configurations:
 
-## `MNIST-FPGA`
-
-Entry point for the FPGA MNIST implementation.
-
-This branch connects the model, camera, local-classification, live-classification, and cloud-classification workflows.
-
----
-
-## FPGA Local Classification
-
-### `MNIST-FPGA-Local-Classification-Measurement-Code`
-
-Contains the source used for controlled FPGA local-classification measurements.
-
-### `MNIST-FPGA-Local-Classification-Measurement-Notebook-and-Data`
-
-Contains the corresponding measurement notebook, benchmark results, screenshots, logs, and supporting data.
-
----
-
-## FPGA Live Local Classification
-
-### `MNIST-FPGA-Live-Classification-Code`
-
-Contains the FPGA source used for live camera-to-local-classification operation.
-
-### `MNIST-FPGA-Live-Classification-Notebook-and-Data`
-
-Documents the live local-classification workflow and supporting experimental evidence.
-
----
-
-## FPGA Cloud Classification
-
-### `MNIST-FPGA-Cloud-Classification-Measurement-Code`
-
-Contains the FPGA/cloud client implementation used for controlled cloud-assisted classification measurements.
-
-### `MNIST-FPGA-Cloud-Classification-Measurement-Notebook-and-Data`
-
-Contains the controlled FPGA cloud benchmark documentation and experimental data.
-
----
-
-## FPGA Cloud Live Classification
-
-### `MNIST-FPGA-Cloud-Live-Classification-Code`
-
-Contains the FPGA/cloud implementation used for live camera-based cloud classification.
-
-### `MNIST-FPGA-Cloud-Live-Classification-Notebook-and-Data`
-
-Contains the live cloud-classification notebook, measurements, screenshots, and supporting data.
-
----
-
-# Unity MNIST Implementation
-
-The Unity branches document MNIST inference on Windows PC and Meta Quest 3S.
-
-The Unity work is divided into local and cloud-assisted execution.
-
-## `MNIST-Unity`
-
-Entry point for the Unity MNIST implementation.
-
-This branch serves as the navigation layer for the PC, Quest, and cloud Unity experiments.
-
----
-
-# Local Windows PC
-
-The PC implementation uses Unity Inference Engine to execute the ONNX model locally.
-
-Two backends were tested:
-
-```
-BackendType.CPU
-BackendType.GPUCompute
+```text
+blk_mem_gen_0.xci
+blk_mem_gen_stored.xci
 ```
 
-## `MNIST-Unity-Local-PC-Code`
+The corresponding ZedBoard constraints file defines the FPGA connections for:
 
-Contains the Unity source used for local Windows inference, including:
-
-- Unity scene;
-- C# benchmark scripts;
-- local camera pipeline;
-- ONNX model asset; and
-- MNIST test binaries.
-
-The same project was reused across CPU and GPU testing by changing the active inference backend and benchmark configuration.
-
-## `MNIST-Unity-Local-PC-Data-And-Notebook`
-
-Contains:
-
-- Unity project setup documentation;
-- CPU/GPU benchmark documentation;
-- accuracy evidence;
-- latency results;
-- throughput results;
-- process-memory evidence;
-- camera benchmarks;
-- power-measurement evidence;
-- screenshots; and
-- videos.
-
----
-
-# Local Meta Quest 3S
-
-The Quest implementation extends the working PC Unity project rather than recreating it from scratch.
-
-The Quest-specific changes include:
-
-```
-Windows build
-    → Android / Quest build
-
-WebCamTexture
-    → PassthroughCameraAccess
-
-Desktop Main Camera
-    → Meta XR rig
-
-Mouse interaction
-    → XR poke and ray interaction
-```
-
-## `MNIST-Unity-Local-Quest3S-Code`
-
-Contains the Quest-specific code delta:
-
-- `QuestCameraMNISTInference.cs`;
-- `QuestCameraPreview.cs`;
-- `SecondScene.unity`;
-- Unity metadata files; and
-- the Quest-enabled package manifest.
-
-The shared PC model and benchmark assets are referenced from the local PC implementation rather than duplicated.
-
-## `MNIST-Unity-Local-Quest3S-Data-And-Notebook`
-
-Contains:
-
-- PC-to-Quest conversion documentation;
-- Android build configuration;
-- Meta XR SDK setup;
-- XR rig configuration;
-- Canvas conversion;
-- poke and ray interaction;
-- MQDH deployment workflow;
-- GPU benchmarks;
-- CPU benchmarks;
-- tethered testing;
-- untethered testing;
-- OVR Metrics logs; and
-- Quest benchmark screenshots.
-
-The local Quest benchmark sequence includes:
-
-```
-GPU tethered
-GPU untethered
-CPU tethered
-CPU untethered
-```
-
----
-
-# Unity Cloud-Assisted Inference
-
-The cloud Unity implementation reuses the existing PC and Quest scenes.
-
-No separate cloud-specific scenes were created.
-
-The primary change is the inference path:
-
-```
-Local:
-Input
-    ↓
-Unity Inference Engine
-    ↓
-Local prediction
-```
-
-```
-Cloud:
-Input
-    ↓
-HTTP request
-    ↓
-Google Cloud Run
-    ↓
-Prediction response
-```
-
-## `MNIST-Unity-Cloud-Code`
-
-Contains the four cloud-specific Unity scripts:
-
-```
-CloudMNISTSingleTest.cs
-CloudMNISTBenchmark.cs
-CloudCameraMNISTInference.cs
-QuestCloudCameraMNISTInference.cs
-```
-
-These provide:
-
-- single-image cloud validation;
-- controlled 1,000-image cloud benchmarking;
-- PC webcam-to-cloud inference; and
-- Quest passthrough-camera-to-cloud inference.
-
-## `MNIST-Unity-Cloud-Data-And-Notebook`
-
-Contains the combined PC and Quest cloud benchmark documentation.
-
-PC evidence includes:
-
-- controlled cloud benchmarks;
-- camera benchmarks;
-- editor versus standalone-build observations;
-- Windows memory evidence;
-- power-measurement videos; and
-- Internet-dependency evidence.
-
-Quest evidence includes:
-
-- tethered cloud benchmarks;
-- untethered cloud benchmarks;
-- controlled accuracy/latency/throughput;
-- frozen-camera benchmarks;
-- end-to-end camera benchmarks;
-- live camera classification;
-- live camera throughput; and
-- OVR Metrics telemetry.
-
-The cloud controlled benchmark evaluates:
-
-```
-1000 MNIST images
-```
-
-The observed cloud subset accuracy was:
-
-```
-957 / 1000
-95.70%
-```
-
-This result is kept distinct from the 10,000-image local model validation result.
-
----
-
-# Cloud Infrastructure
-
-## `Cloud`
-
-Contains the server-side cloud inference implementation and deployment materials used by the FPGA and Unity cloud-assisted experiments.
-
-The Unity clients communicate with the deployed prediction service through HTTP requests.
-
-The client-side MNIST representation is converted to a compact 784-byte request before transmission.
-
----
-
-# FPGA Security Evaluation
-
-## `FPGA-Security`
-
-Contains the FPGA security evaluation notebook and two Vivado 2018.1 screenshots documenting the bitstream-generation workflow and reviewed security settings.
-
-The notebook records the qualitative review of JTAG and debugging access, bitstream protection, pretrained model parameters, Zynq-7000 security advisories, ARM Cortex-A9 vulnerabilities, development software, and OV7670 image acquisition. It supports **Chapter IV, Section 4.7.2.1 — FPGA Deployment**.
-
-Vivado project source and model-parameter logic are maintained in `MNIST-FPGA-Live-Classification-Code`. Vendor manuals, technical specifications, and security notices are referenced from `Manuals-and-Specifications` rather than duplicated here.
-
-# PC Security Evaluation
-
-## `PC-Security`
-
-Contains the PC security evaluation notebook and 14 supporting screenshots documenting the Windows 11 Pro 25H2 security configuration of the HP ZBook Fury 17 G7 workstation.
-
-The notebook records the qualitative review of operating-system protections, user authentication and administrator privileges, Secure Boot, TPM 2.0, BitLocker encryption, Unity software security advisories, local model and data storage, and Lumens VC-B2U USB camera access. It supports **Chapter IV, Section 4.7.2.2 — PC Deployment**.
-
-The screenshots document Windows security settings, account configuration, installed updates, camera permissions, and the organization of experimental files.
-
-Unity implementation code and model-loading scripts are maintained in `MNIST-Unity-Local-PC-Code`. Benchmark procedures and experimental data are maintained in `MNIST-Unity-Local-PC-Data-And-Notebook`. Microsoft and Unity security documentation and published advisories are referenced from `Manuals-and-Specifications` rather than duplicated here.
-
----
-
-# Meta Quest 3S Security Evaluation
-
-## `Quest3s-security`
-
-Contains the Meta Quest 3S security evaluation reproducibility notebook, device configuration screenshots, and supporting security research.
-
-The notebook documents the qualitative review of headset authentication, Developer Mode, USB debugging authorization, Horizon OS updates, application deployment, local model and data storage, passthrough camera permissions, and published security vulnerabilities. It supports **Chapter IV, Section 4.7.2.3 — Meta Quest 3S Deployment**.
-
-The branch includes screenshots documenting the connected headset's firmware information and the November 5, 2026 operating-system update. It also contains Tahat et al. (2024), *VR Headset Ransomware Attack Vulnerability*, as supporting research concerning malicious application installation on standalone VR headsets.
-
-Unity implementation code is maintained in `MNIST-Unity-Local-Quest-Code`. Benchmark procedures and experimental data are maintained in `MNIST-Unity-Local-Quest-Data-And-Notebook`. Official Meta documentation and published vulnerability records are referenced from `Manuals-and-Specifications`.
-
----
-
-# Cloud-Assisted Inference Security Evaluation
-
-## `Cloud-Security`
-
-Contains the cloud-assisted inference security evaluation reproducibility notebook and seven supporting configuration screenshots.
-
-The notebook documents the qualitative evaluation of Ethernet and Wi-Fi connectivity, TLS and HTTPS communication, transmitted data, Cloud Run authentication and public access, IAM permissions, container configuration, application security, and operational logging. It supports **Chapter IV, Section 4.7.3 — Cloud-Assisted Inference Security Results**.
-
-The screenshots document the university network configurations used by the FPGA, PC, and Meta Quest 3S, along with Google Cloud Run networking, IAM permissions, container settings, and request logs.
-
-The evaluation identifies implemented protections and configuration-specific concerns, including public service invocation, broad runtime service account permissions, and limitations in the FPGA's TLS implementation.
-
-The Python inference service, dependencies, and existing deployment evidence are maintained in `Cloud`. Client implementation code and performance measurements remain in their respective implementation branches. Platform documentation and published security references are maintained in `Manuals-and-Specifications`.
-
----
-
-
-# Manuals and Specifications
-
-## `Manuals-and-Specifications`
-
-Contains archived hardware documentation and links to supporting technical references used during implementation and measurement.
-
-Examples include documentation for:
-
-- ZedBoard;
+- system clock;
 - OV7670 camera;
-- P4400 Kill A Watt meter;
-- HP ZBook workstation;
-- Meta Quest 3S;
-- Unity;
-- Meta Quest development tools;
-- Xilinx Vivado / SDK; and
-- related hardware and software environments.
+- VGA output;
+- capture and camera configuration buttons;
+- live/stored image selection switch; and
+- classification LEDs.
 
-These materials support reproducibility of the platform configuration and measurement procedures.
-
----
-
-# Experimental Design
-
-The repository separates several measurement categories.
-
-## Model Correctness
-
-```
-Classification accuracy
-```
-
-## Controlled Performance
-
-```
-Inference latency
-Throughput
-```
-
-## Resource Requirements
-
-```
-Process memory
-Device memory
-FPGA hardware resources
-```
-
-## Power and Energy
-
-```
-Whole-system PC power
-FPGA power
-Quest device telemetry
-```
-
-## Camera/Application Performance
-
-```
-Frozen-camera inference
-End-to-end camera latency
-Live camera throughput
-```
-
-## Deployment Conditions
-
-Where applicable, evidence distinguishes:
-
-```
-CPU vs GPU
-Local vs cloud
-Editor vs standalone build
-Quest tethered vs untethered
-Controlled input vs live camera
-```
-
----
-
-# Measurement Boundaries
-
-Care should be taken when comparing measurements from different deployment environments because not all latency values represent the same boundary.
-
-### Local Unity inference
-
-Typically measures:
-
-```
-worker.Schedule()
-    ↓
-synchronous output readback
-```
-
-### Cloud inference
-
-Measures:
-
-```
-request transmission
-    ↓
-network
-    ↓
-cloud processing
-    ↓
-response transmission
-```
-
-### Frozen-camera benchmark
-
-Uses an already prepared camera-derived input.
-
-### End-to-end camera benchmark
-
-Includes camera acquisition and preprocessing before prediction.
-
-The notebooks in each branch document the exact measurement procedure used for that environment.
-
----
-
-# Recommended Navigation
-
-A reader interested in reproducing the experiments can follow this general order.
-
-## 1. Shared Models
-
-```
-MNIST-Models
-    ↓
-MNIST-Models-Code
-    ↓
-MNIST-Models-Notebooks-and-Data
-```
+The synthesis top is:
 
 ```text
-EMNIST-Models
-    ↓
-EMNIST-Models-Code
-    ↓
-EMNIST-Models-Data-and-Notebook
+ov7670_top
 ```
 
-## 2. FPGA Camera
+The implementation is a mixed-language Vivado project containing VHDL camera modules and Verilog CNN modules.
 
-```
-FPGA-Camera-Setup
-    ↓
-FPGA-Camera-Setup-Code
-    ↓
-FPGA-Camera-Setup-Notebook-and-Data
-```
+To reconstruct the design, the camera sources, complete CNN hierarchy, model parameter files, memory IP configurations, and final hardware constraints must be included.
 
-## 3. FPGA MNIST
-
-```
-MNIST-FPGA
-    ↓
-Local Classification
-    ↓
-Live Classification
-    ↓
-Cloud Classification
-    ↓
-Cloud Live Classification
-```
-
-## 4. Unity Local PC
-
-```
-MNIST-Unity
-    ↓
-MNIST-Unity-Local-PC-Code
-    ↓
-MNIST-Unity-Local-PC-Data-And-Notebook
-```
-
-## 5. Unity Local Quest 3S
-
-```
-MNIST-Unity-Local-Quest3S-Code
-    ↓
-MNIST-Unity-Local-Quest3S-Data-And-Notebook
-```
-
-## 6. Unity Cloud
-
-```
-MNIST-Unity-Cloud-Code
-    ↓
-MNIST-Unity-Cloud-Data-And-Notebook
-```
+The memory initialization files must be available to Vivado during synthesis.
 
 ---
 
-## 7. FPGA Security
+# Bitstream
 
-```
-FPGA-Security
-    ├── FPGA security evaluation notebook
-    └── Vivado bitstream evidence screenshots
-```
+The completed bitstream is retained in this branch as the programmable FPGA artifact for the live EMNIST classification configuration.
 
-The notebook references the FPGA implementation code and the vendor security documentation kept in their respective branches.
+The bitstream represents the integrated camera and CNN implementation, rather than the earlier standalone fixed-image CNN demonstration.
 
+The supporting source files document the hardware configuration from which the implementation was constructed.
 
-## 9. Meta Quest 3S Security
+---
 
-**Branch:** `Quest3s-security`
+# Functional Validation
 
-- `Quest3S_Security_Evaluation_Reproducibility.ipynb` — Device security evaluation procedures, observations, and limitations.
-- `Quest3S_device_info.png` — Meta Quest Developer Hub device and firmware information.
-- `Quest3S_OS_version.jpg` — Horizon OS version and automatic update settings.
-- `Tahat et al. - 2024 - VR Headset Ransomware Attack Vulnerability.pdf` — Supporting published research on standalone VR headset security.
+The integrated design was tested using physical character images presented to the OV7670 camera.
 
-**Related branches:**
-- `MNIST-Unity-Local-Quest-Code`
-- `MNIST-Unity-Local-Quest-Data-And-Notebook`
-- `Manuals-and-Specifications`
+The tests confirmed that the system could:
 
+- acquire camera images;
+- generate and display the stored 28 × 28 representation;
+- transfer captured pixels to the CNN;
+- complete local CNN inference;
+- produce different predictions for different character inputs; and
+- display the predicted class through the ZedBoard LEDs.
 
-## 10. Cloud-Assisted Inference Security
+Informal testing included successful classification of the digits **2** and **7** and the letter **F**.
 
-**Branch:** `Cloud-Security`
+Other character inputs produced incorrect classifications under the tested acquisition conditions.
 
-- `Cloud_Security_Evaluation_Reproducibility.ipynb` — Security evaluation procedures, configuration findings, evidence, and limitations.
-- `wifi_settings.png` — University WPA2-protected research Wi-Fi configuration.
-- `open_settings.png` — University open Wi-Fi configuration used by the Quest 3S.
-- `ethernet_properties.png` — University wired-network environment.
-- `cloud_networking.png` — Cloud Run ingress, HTTPS endpoints, and network configuration.
-- `cloud_iam_permissions.png` — IAM roles and runtime service account permissions.
-- `cloud_containers.png` — Container deployment and resource settings.
-- `cloud_log.png` — Cloud Run operational request logs.
+Image positioning, illumination, and thresholding affected the captured representation and classification behavior.
 
-**Related branches:**
-- `Cloud`
-- `FPGA-Security`
-- `PC-Security`
-- `Quest3s-security`
-- `Manuals-and-Specifications`
+These observations established **proof of concept for live camera-based EMNIST CNN inference**.
 
+They were not treated as a controlled classification accuracy experiment.
 
-# Code and Data Branch Convention
+Formal accuracy, inference latency, throughput, resource utilization, and power measurements are documented separately from this functional demonstration.
 
-Where practical, implementation areas are separated into:
+---
 
-```
-...-Code
-```
+# Relationship to Previous Implementations
 
-and:
+The implementation reused the existing OV7670 camera pipeline from the MNIST FPGA work.
 
-```
-...-Notebook-and-Data
-```
+The principal changes were:
 
-branches.
+- replacing the MNIST NN with the compact EMNIST CNN;
+- providing writable camera-derived input memory for the first convolutional layer;
+- connecting the CNN processing stages to the camera capture controls;
+- supporting 47 output classes; and
+- updating LED output to display a six-bit class ID and inference status.
 
-### Code branches
+The existing live/stored image switch, VGA display, and camera configuration remained part of the implementation.
 
-Contain source code and implementation-specific assets.
-
-### Notebook/Data branches
-
-Contain:
-
-- explanatory notebooks;
-- benchmark procedures;
-- screenshots;
-- CSV files;
-- hardware/resource logs;
-- photographs;
-- videos; and
-- other experimental evidence.
-
-Entry-point branches such as `MNIST-Models`, `EMNIST-Models`, `FPGA-Camera-Setup`, `MNIST-FPGA`, and `MNIST-Unity` provide navigation or packaged artifacts without duplicating every development file.
+The standalone EMNIST CNN verification preceded the camera integration. The original fixed-image testing established arithmetic and classification behavior before physical camera inputs were introduced.
 
 ---
 
 # Reproducibility Notes
 
-This repository preserves the implementation as it evolved during the dissertation research.
+The repository preserves the final working camera integration and the CNN source hierarchy.
 
-In some cases:
+The parameter files correspond to the trained compact CNN selected during model development.
 
-- the same Unity project was reused across CPU and GPU configurations;
-- Quest functionality was added to the existing PC project;
-- cloud functionality was added by replacing local inference components;
-- screenshots preserve both Editor and standalone-build execution;
-- multiple screenshots represent repeated trials rather than duplicate evidence; and
-- device telemetry logs cover measurement sessions rather than one isolated benchmark.
+The working camera pipeline uses binary thresholding rather than the original grayscale representation used during PyTorch training.
 
-The notebooks document these relationships so that the repository reflects the actual experimental workflow rather than an artificial reconstruction of separate projects.
+Consequently, camera-based classification behavior may differ from software reference-model accuracy.
 
----
+The live-camera tests were intended to demonstrate functional integration. They did not establish classification accuracy over a standardized physical character dataset.
 
-# Current Repository Scope
-
-The repository documents the **MNIST implementation and evaluation workflow**, including the FPGA, Windows PC, Meta Quest 3S, cloud-assisted inference, and security evaluation branches.
-
-The repository also includes the **EMNIST Balanced model-development workflow**, consisting of dataset preparation, training, validation, model comparison, and selection of the compact CNN for subsequent implementation.
-
-The EMNIST model branches currently preserve the selected PyTorch reference model, training code, reproducibility notebook, and supporting experimental evidence.
-
-Additional EMNIST FPGA and Unity implementation materials, including validated deployment-specific model representations, will be incorporated as the work is completed.
-
-SVHN, CIFAR-10, and other remaining dissertation implementation materials may be added using the same general branch organization.
+Generated Vivado caches, intermediate prototype modules, duplicate IP netlists, and earlier diagnostic configurations are not required for this branch.
 
 ---
 
-# License
+# Related Branches
 
-See the `LICENSE` file included in the repository and individual branches where applicable.
+## `EMNIST-Models`
+
+Contains the selected trained EMNIST reference model.
+
+## `EMNIST-Models-Code`
+
+Contains the Python model-development and training scripts.
+
+## `EMNIST-Models-Data-and-Notebook`
+
+Contains model-development reproducibility documentation, training results, saved checkpoints, and model-selection evidence.
+
+## `EMNIST-FPGA-Live-Classification-Notebook-and-Data`
+
+Intended to preserve the live camera integration procedure, screenshots, functional-validation observations, and supporting experimental evidence.
+
+Additional FPGA measurement branches will document controlled classification accuracy, inference timing, hardware utilization, and power consumption separately.
 
 ---
 
 # Dissertation Context
 
-This repository serves as the reproducibility archive for the dissertation research.
+This branch supports the EMNIST live-camera FPGA integration methodology and functional-validation results described in the dissertation.
 
-The repository provides the implementation and experimental evidence.
+The implementation demonstrates that the selected compact CNN can be integrated with the existing OV7670 acquisition system and execute classification locally on the ZedBoard.
 
-The dissertation provides the formal:
+The repository preserves the implementation source and programmable artifact.
 
-- research questions;
-- methodology;
-- statistical analysis;
-- cross-platform results;
-- performance interpretation;
-- security analysis;
-- deployment trade-offs; and
-- conclusions.
-
-Repository artifacts should therefore be interpreted together with the corresponding dissertation methodology and results sections.
+The dissertation provides the formal methodology, results, experimental limitations, and interpretation of the hardware implementation.
