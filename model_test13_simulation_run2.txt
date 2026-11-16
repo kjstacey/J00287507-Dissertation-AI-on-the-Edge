@@ -1,0 +1,313 @@
+start_gui
+create_project emnistModelTest13v2 C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2 -part xc7z020clg484-1
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2018.1/data/ip'.
+create_project: Time (s): cpu = 00:00:08 ; elapsed = 00:00:05 . Memory (MB): peak = 886.562 ; gain = 49.777
+set_property board_part em.avnet.com:zed:part0:1.4 [current_project]
+set_property target_language VHDL [current_project]
+add_files -norecurse -scan_for_includes {C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/image.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/weights.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/multiplier3.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/multiplier2.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/gap_expected.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/conv2_expected.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/fc_weights.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/multiplier.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/pool2_expected.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/bias2.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/expected.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/fc_bias.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/weights3.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/weights2.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/pool_expected.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/conv3_expected.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/bias.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/fc_scores_expected.mem C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/rom/bias3.mem}
+add_files -norecurse -scan_for_includes {C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnist_complete_cnn_compact_io_top.v C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/conv1_pool1_conv2_pool2_conv3_gap_bram_top.v C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/conv2_controller_sync.v C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/conv144_mac_q24.v C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/fc47_controller.v C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/conv1_bram_top.v C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/maxpool1_controller.v C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/maxpool2_controller.v C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/conv1_controller_sync.v C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/conv1_pool1_bram_top.v C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/conv288_mac_q24.v C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/conv1_pool1_conv2_bram_top.v C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/gap64_controller.v C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/conv1_pool1_conv2_pool2_bram_top.v C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/conv3_controller_sync.v C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnist_complete_cnn_bram_top.v C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/conv1_pool1_conv2_pool2_conv3_bram_top.v}
+add_files -fileset sim_1 -norecurse -scan_for_includes C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/tb_emnist_complete_cnn_bram_top.v
+import_files -force -norecurse
+INFO: [filemgmt 20-348] Importing the appropriate files for fileset: 'sim_1'
+INFO: [filemgmt 20-348] Importing the appropriate files for fileset: 'sources_1'
+import_files -fileset constrs_1 -force -norecurse C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/core_25mhz.xdc
+update_compile_order -fileset sources_1
+update_compile_order -fileset sim_1
+update_compile_order -fileset sources_1
+launch_simulation
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'emnist_complete_cnn_compact_io_top' in fileset 'sim_1'...
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/image.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/weights.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/multiplier3.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/multiplier2.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/gap_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/conv2_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/fc_weights.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/multiplier.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/pool2_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/bias2.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/fc_bias.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/weights3.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/weights2.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/pool_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/conv3_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/bias.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/fc_scores_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/bias3.mem'
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj emnist_complete_cnn_compact_io_top_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv144_mac_q24.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module conv144_mac_q24
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_bram_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module conv1_bram_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_controller_sync.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module conv1_controller_sync
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_bram_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module conv1_pool1_bram_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_conv2_bram_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module conv1_pool1_conv2_bram_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_conv2_pool2_bram_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module conv1_pool1_conv2_pool2_bram_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_conv2_pool2_conv3_bram_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module conv1_pool1_conv2_pool2_conv3_bram_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_conv2_pool2_conv3_gap_bram_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module conv1_pool1_conv2_pool2_conv3_gap_bram_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv288_mac_q24.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module conv288_mac_q24
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv2_controller_sync.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module conv2_controller_sync
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv3_controller_sync.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module conv3_controller_sync
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/emnist_complete_cnn_bram_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module emnist_complete_cnn_bram_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/fc47_controller.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module fc47_controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/gap64_controller.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module gap64_controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/maxpool1_controller.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module maxpool1_controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/maxpool2_controller.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module maxpool2_controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/emnist_complete_cnn_compact_io_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module emnist_complete_cnn_compact_io_top
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim'
+Vivado Simulator 2018.1
+Copyright 1986-1999, 2001-2017 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2018.1/bin/unwrapped/win64.o/xelab.exe -wto 589a7165aba3474bb9bbb55c05fd5fe3 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot emnist_complete_cnn_compact_io_top_behav xil_defaultlib.emnist_complete_cnn_compact_io_top xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+ERROR: [VRFC 10-2063] Module <conv3x3_mac_q24> not found while processing module instance <mac> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_controller_sync.v:50]
+ERROR: [VRFC 10-2063] Module <maxpool1_controller> not found while processing module instance <pool1> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_bram_top.v:29]
+ERROR: [VRFC 10-2063] Module <conv2_controller_sync> not found while processing module instance <conv2> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_conv2_bram_top.v:50]
+ERROR: [VRFC 10-2063] Module <maxpool2_controller> not found while processing module instance <pool2> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_conv2_pool2_bram_top.v:29]
+ERROR: [VRFC 10-2063] Module <conv3_controller_sync> not found while processing module instance <conv3> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_conv2_pool2_conv3_bram_top.v:47]
+ERROR: [VRFC 10-2063] Module <gap64_controller> not found while processing module instance <gap> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_conv2_pool2_conv3_gap_bram_top.v:35]
+ERROR: [VRFC 10-2063] Module <fc47_controller> not found while processing module instance <fc> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/emnist_complete_cnn_bram_top.v:56]
+ERROR: [XSIM 43-3322] Static elaboration of top level Verilog design unit(s) in library work failed.
+INFO: [USF-XSim-69] 'elaborate' step finished in '1' seconds
+INFO: [USF-XSim-99] Step results log file:'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/elaborate.log'
+ERROR: [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/elaborate.log' file for more information.
+ERROR: [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.
+ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors.
+set_property top tb_emnist_complete_cnn_bram_top [get_filesets sim_1]
+set_property top_lib xil_defaultlib [get_filesets sim_1]
+update_compile_order -fileset sim_1
+launch_simulation
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'tb_emnist_complete_cnn_bram_top' in fileset 'sim_1'...
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/image.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/weights.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/multiplier3.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/multiplier2.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/gap_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/conv2_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/fc_weights.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/multiplier.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/pool2_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/bias2.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/fc_bias.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/weights3.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/weights2.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/pool_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/conv3_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/bias.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/fc_scores_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/bias3.mem'
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj tb_emnist_complete_cnn_bram_top_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sim_1/imports/emnistModelTest13/tb_emnist_complete_cnn_bram_top.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_emnist_complete_cnn_bram_top
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim'
+Vivado Simulator 2018.1
+Copyright 1986-1999, 2001-2017 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2018.1/bin/unwrapped/win64.o/xelab.exe -wto 589a7165aba3474bb9bbb55c05fd5fe3 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_emnist_complete_cnn_bram_top_behav xil_defaultlib.tb_emnist_complete_cnn_bram_top xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+ERROR: [VRFC 10-2063] Module <conv3x3_mac_q24> not found while processing module instance <mac> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_controller_sync.v:50]
+ERROR: [VRFC 10-2063] Module <maxpool1_controller> not found while processing module instance <pool1> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_bram_top.v:29]
+ERROR: [VRFC 10-2063] Module <conv2_controller_sync> not found while processing module instance <conv2> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_conv2_bram_top.v:50]
+ERROR: [VRFC 10-2063] Module <maxpool2_controller> not found while processing module instance <pool2> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_conv2_pool2_bram_top.v:29]
+ERROR: [VRFC 10-2063] Module <conv3_controller_sync> not found while processing module instance <conv3> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_conv2_pool2_conv3_bram_top.v:47]
+ERROR: [VRFC 10-2063] Module <gap64_controller> not found while processing module instance <gap> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_conv2_pool2_conv3_gap_bram_top.v:35]
+ERROR: [VRFC 10-2063] Module <fc47_controller> not found while processing module instance <fc> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/emnist_complete_cnn_bram_top.v:56]
+ERROR: [XSIM 43-3322] Static elaboration of top level Verilog design unit(s) in library work failed.
+INFO: [USF-XSim-69] 'elaborate' step finished in '1' seconds
+INFO: [USF-XSim-99] Step results log file:'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/elaborate.log'
+ERROR: [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/elaborate.log' file for more information.
+ERROR: [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.
+ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors.
+launch_simulation
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'tb_emnist_complete_cnn_bram_top' in fileset 'sim_1'...
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/image.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/weights.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/multiplier3.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/multiplier2.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/gap_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/conv2_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/fc_weights.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/multiplier.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/pool2_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/bias2.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/fc_bias.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/weights3.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/weights2.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/pool_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/conv3_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/bias.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/fc_scores_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/bias3.mem'
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj tb_emnist_complete_cnn_bram_top_vlog.prj"
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim'
+Vivado Simulator 2018.1
+Copyright 1986-1999, 2001-2017 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2018.1/bin/unwrapped/win64.o/xelab.exe -wto 589a7165aba3474bb9bbb55c05fd5fe3 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_emnist_complete_cnn_bram_top_behav xil_defaultlib.tb_emnist_complete_cnn_bram_top xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+ERROR: [VRFC 10-2063] Module <conv3x3_mac_q24> not found while processing module instance <mac> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_controller_sync.v:50]
+ERROR: [VRFC 10-2063] Module <maxpool1_controller> not found while processing module instance <pool1> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_bram_top.v:29]
+ERROR: [VRFC 10-2063] Module <conv2_controller_sync> not found while processing module instance <conv2> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_conv2_bram_top.v:50]
+ERROR: [VRFC 10-2063] Module <maxpool2_controller> not found while processing module instance <pool2> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_conv2_pool2_bram_top.v:29]
+ERROR: [VRFC 10-2063] Module <conv3_controller_sync> not found while processing module instance <conv3> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_conv2_pool2_conv3_bram_top.v:47]
+ERROR: [VRFC 10-2063] Module <gap64_controller> not found while processing module instance <gap> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/conv1_pool1_conv2_pool2_conv3_gap_bram_top.v:35]
+ERROR: [VRFC 10-2063] Module <fc47_controller> not found while processing module instance <fc> [C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistModelTest13/emnist_complete_cnn_bram_top.v:56]
+ERROR: [XSIM 43-3322] Static elaboration of top level Verilog design unit(s) in library work failed.
+INFO: [USF-XSim-69] 'elaborate' step finished in '1' seconds
+INFO: [USF-XSim-99] Step results log file:'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/elaborate.log'
+ERROR: [USF-XSim-62] 'elaborate' step failed with error(s). Please check the Tcl console output or 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/elaborate.log' file for more information.
+ERROR: [Vivado 12-4473] Detected error while running simulation. Please correct the issue and retry this operation.
+ERROR: [Common 17-39] 'launch_simulation' failed due to earlier errors.
+add_files -norecurse -scan_for_includes C:/Users/KristaStacey/Documents/emnistFPGA/vectors.mem
+import_files -norecurse C:/Users/KristaStacey/Documents/emnistFPGA/vectors.mem
+add_files -norecurse -scan_for_includes {C:/Users/KristaStacey/Documents/emnistFPGA/tb_conv3x3_mac_q24.v C:/Users/KristaStacey/Documents/emnistFPGA/tb_conv1_controller.v C:/Users/KristaStacey/Documents/emnistFPGA/conv1_controller.v C:/Users/KristaStacey/Documents/emnistFPGA/conv3x3_mac_q24.v}
+import_files -norecurse {C:/Users/KristaStacey/Documents/emnistFPGA/tb_conv3x3_mac_q24.v C:/Users/KristaStacey/Documents/emnistFPGA/tb_conv1_controller.v C:/Users/KristaStacey/Documents/emnistFPGA/conv1_controller.v C:/Users/KristaStacey/Documents/emnistFPGA/conv3x3_mac_q24.v}
+update_compile_order -fileset sources_1
+set_property USED_IN_IMPLEMENTATION 0 [get_files C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistFPGA/tb_conv1_controller.v]
+set_property USED_IN_SYNTHESIS 0 [get_files C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistFPGA/tb_conv1_controller.v]
+set_property USED_IN_IMPLEMENTATION 0 [get_files C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v]
+set_property USED_IN_SYNTHESIS 0 [get_files C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v]
+launch_simulation
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'tb_emnist_complete_cnn_bram_top' in fileset 'sim_1'...
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/image.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/weights.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/multiplier3.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/multiplier2.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/gap_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/conv2_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/fc_weights.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/multiplier.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/pool2_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/bias2.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/fc_bias.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/weights3.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/weights2.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/pool_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/conv3_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/bias.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/fc_scores_expected.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/bias3.mem'
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/vectors.mem'
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj tb_emnist_complete_cnn_bram_top_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sources_1/imports/emnistFPGA/conv3x3_mac_q24.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module conv3x3_mac_q24
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim'
+Vivado Simulator 2018.1
+Copyright 1986-1999, 2001-2017 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2018.1/bin/unwrapped/win64.o/xelab.exe -wto 589a7165aba3474bb9bbb55c05fd5fe3 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_emnist_complete_cnn_bram_top_behav xil_defaultlib.tb_emnist_complete_cnn_bram_top xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.conv3x3_mac_q24
+Compiling module xil_defaultlib.conv1_controller_sync
+Compiling module xil_defaultlib.conv1_bram_top
+Compiling module xil_defaultlib.maxpool1_controller
+Compiling module xil_defaultlib.conv1_pool1_bram_top
+Compiling module xil_defaultlib.conv144_mac_q24
+Compiling module xil_defaultlib.conv2_controller_sync
+Compiling module xil_defaultlib.conv1_pool1_conv2_bram_top
+Compiling module xil_defaultlib.maxpool2_controller
+Compiling module xil_defaultlib.conv1_pool1_conv2_pool2_bram_top
+Compiling module xil_defaultlib.conv288_mac_q24
+Compiling module xil_defaultlib.conv3_controller_sync
+Compiling module xil_defaultlib.conv1_pool1_conv2_pool2_conv3_br...
+Compiling module xil_defaultlib.gap64_controller
+Compiling module xil_defaultlib.conv1_pool1_conv2_pool2_conv3_ga...
+Compiling module xil_defaultlib.fc47_controller
+Compiling module xil_defaultlib.emnist_complete_cnn_bram_top
+Compiling module xil_defaultlib.tb_emnist_complete_cnn_bram_top
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot tb_emnist_complete_cnn_bram_top_behav
+
+****** Webtalk v2018.1 (64-bit)
+  **** SW Build 2188600 on Wed Apr  4 18:40:38 MDT 2018
+  **** IP Build 2185939 on Wed Apr  4 20:55:05 MDT 2018
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+source C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim/xsim.dir/tb_emnist_complete_cnn_bram_top_behav/webtalk/xsim_webtalk.tcl -notrace
+INFO: [Common 17-206] Exiting Webtalk at Tue Nov 10 09:10:17 2026...
+INFO: [USF-XSim-69] 'elaborate' step finished in '5' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "tb_emnist_complete_cnn_bram_top_behav -key {Behavioral:sim_1:Functional:tb_emnist_complete_cnn_bram_top} -tclbatch {tb_emnist_complete_cnn_bram_top.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2018.1
+Time resolution is 1 ps
+source tb_emnist_complete_cnn_bram_top.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'tb_emnist_complete_cnn_bram_top_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:00:04 ; elapsed = 00:00:09 . Memory (MB): peak = 953.289 ; gain = 25.918
+run all
+PASS: complete CNN Conv1 -> Pool1 -> Conv2 -> Pool2 -> Conv3 -> GAP -> FC47; pool1=3136/3136 conv2=6272/6272 pool2=1568/1568 conv3=3136/3136 gap=64/64 fc=47/47 predicted_class=45 score=950 cycles=3999831
+PASS: 47/47 integrated signed score RAM readbacks; cycles=3999879
+$finish called at time : 159995261 ns : File "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest13/emnistModelTest13v2/emnistModelTest13v2.srcs/sim_1/imports/emnistModelTest13/tb_emnist_complete_cnn_bram_top.v" Line 94
+run: Time (s): cpu = 00:00:13 ; elapsed = 00:00:14 . Memory (MB): peak = 959.223 ; gain = 5.133

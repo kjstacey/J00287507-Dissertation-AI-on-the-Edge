@@ -1,0 +1,75 @@
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'tb_conv1_controller' in fileset 'sim_1'...
+INFO: [SIM-utils-43] Exported 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.sim/sim_1/behav/xsim/vectors.mem'
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj tb_conv1_controller_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.srcs/sources_1/imports/emnistFPGA/conv1_controller.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module conv1_controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.srcs/sources_1/imports/emnistFPGA/conv3x3_mac_q24.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module conv3x3_mac_q24
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.srcs/sim_1/imports/emnistFPGA/tb_conv1_controller.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_conv1_controller
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [USF-XSim-69] 'compile' step finished in '1' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.sim/sim_1/behav/xsim'
+Vivado Simulator 2018.1
+Copyright 1986-1999, 2001-2017 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2018.1/bin/unwrapped/win64.o/xelab.exe -wto b29e187ee1bc4cc9bdc8599bba06cae5 --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_conv1_controller_behav xil_defaultlib.tb_conv1_controller xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.conv3x3_mac_q24
+Compiling module xil_defaultlib.conv1_controller
+Compiling module xil_defaultlib.tb_conv1_controller
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot tb_conv1_controller_behav
+
+****** Webtalk v2018.1 (64-bit)
+  **** SW Build 2188600 on Wed Apr  4 18:40:38 MDT 2018
+  **** IP Build 2185939 on Wed Apr  4 20:55:05 MDT 2018
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+source C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.sim/sim_1/behav/xsim/xsim.dir/tb_conv1_controller_behav/webtalk/xsim_webtalk.tcl -notrace
+INFO: [Common 17-206] Exiting Webtalk at Mon Nov  9 09:34:06 2026...
+INFO: [USF-XSim-69] 'elaborate' step finished in '3' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "tb_conv1_controller_behav -key {Behavioral:sim_1:Functional:tb_conv1_controller} -tclbatch {tb_conv1_controller.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2018.1
+Time resolution is 1 ps
+source tb_conv1_controller.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+WARNING: [Wavedata 42-489] Can't add object "/tb_conv1_controller/expected_rom" to the wave window because it has 100352 bits, which exceeds the display limit of 65536 bits.  To change the display limit, use the command "set_property display_limit <new limit> [current_wave_config]".
+# run 1000ns
+WARNING: File image.mem referenced on C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.srcs/sim_1/imports/emnistFPGA/tb_conv1_controller.v at line 37 cannot be opened for reading. Please ensure that this file is available in the current working directory.
+WARNING: File weights.mem referenced on C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.srcs/sim_1/imports/emnistFPGA/tb_conv1_controller.v at line 38 cannot be opened for reading. Please ensure that this file is available in the current working directory.
+WARNING: File bias.mem referenced on C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.srcs/sim_1/imports/emnistFPGA/tb_conv1_controller.v at line 39 cannot be opened for reading. Please ensure that this file is available in the current working directory.
+WARNING: File expected.mem referenced on C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.srcs/sim_1/imports/emnistFPGA/tb_conv1_controller.v at line 40 cannot be opened for reading. Please ensure that this file is available in the current working directory.
+WARNING: File multiplier.mem referenced on C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.srcs/sim_1/imports/emnistFPGA/tb_conv1_controller.v at line 41 cannot be opened for reading. Please ensure that this file is available in the current working directory.
+FATAL: missing/unreadable ROM files; simulation invalid
+$finish called at time : 0 fs : File "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.srcs/sim_1/imports/emnistFPGA/tb_conv1_controller.v" Line 45
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'tb_conv1_controller_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:00:06 ; elapsed = 00:00:08 . Memory (MB): peak = 926.234 ; gain = 27.652
+run all
+FAIL: count=12544 failures=0 overflow_seen=x
+$finish called at time : 6021340 ns : File "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest2/emnistModelTest2.srcs/sim_1/imports/emnistFPGA/tb_conv1_controller.v" Line 68

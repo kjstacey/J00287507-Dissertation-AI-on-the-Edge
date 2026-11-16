@@ -1,0 +1,357 @@
+start_gui
+create_project emnistModelTest C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest -part xc7z020clg484-1
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2018.1/data/ip'.
+create_project: Time (s): cpu = 00:00:06 ; elapsed = 00:00:06 . Memory (MB): peak = 870.949 ; gain = 51.320
+set_property board_part em.avnet.com:zed:part0:1.4 [current_project]
+set_property target_language VHDL [current_project]
+add_files -norecurse -scan_for_includes {C:/Users/KristaStacey/Documents/emnistFPGA/tb_conv3x3_mac_q24.v C:/Users/KristaStacey/Documents/emnistFPGA/conv3x3_mac_q24.v}
+import_files -force -norecurse
+INFO: [filemgmt 20-348] Importing the appropriate files for fileset: 'sources_1'
+update_compile_order -fileset sources_1
+launch_simulation
+INFO: [Vivado 12-5682] Launching behavioral simulation in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.sim/sim_1/behav/xsim'
+INFO: [SIM-utils-51] Simulation object is 'sim_1'
+INFO: [SIM-utils-54] Inspecting design source files for 'tb_conv3x3_mac_q24' in fileset 'sim_1'...
+INFO: [USF-XSim-97] Finding global include files...
+INFO: [USF-XSim-98] Fetching design files from 'sim_1'...
+INFO: [USF-XSim-2] XSim::Compile design
+INFO: [USF-XSim-61] Executing 'COMPILE and ANALYZE' step in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.sim/sim_1/behav/xsim'
+"xvlog --incr --relax -prj tb_conv3x3_mac_q24_vlog.prj"
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/conv3x3_mac_q24.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module conv3x3_mac_q24
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_conv3x3_mac_q24
+INFO: [VRFC 10-2263] Analyzing Verilog file "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.sim/sim_1/behav/xsim/glbl.v" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module glbl
+INFO: [USF-XSim-69] 'compile' step finished in '2' seconds
+INFO: [USF-XSim-3] XSim::Elaborate design
+INFO: [USF-XSim-61] Executing 'ELABORATE' step in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.sim/sim_1/behav/xsim'
+Vivado Simulator 2018.1
+Copyright 1986-1999, 2001-2017 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2018.1/bin/unwrapped/win64.o/xelab.exe -wto dd3bf4f854c74a51b1afaaee04042cbf --incr --debug typical --relax --mt 2 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot tb_conv3x3_mac_q24_behav xil_defaultlib.tb_conv3x3_mac_q24 xil_defaultlib.glbl -log elaborate.log 
+Using 2 slave threads.
+Starting static elaboration
+Completed static elaboration
+Starting simulation data flow analysis
+Completed simulation data flow analysis
+Time Resolution for simulation is 1ps
+Compiling module xil_defaultlib.conv3x3_mac_q24
+Compiling module xil_defaultlib.tb_conv3x3_mac_q24
+Compiling module xil_defaultlib.glbl
+Built simulation snapshot tb_conv3x3_mac_q24_behav
+
+****** Webtalk v2018.1 (64-bit)
+  **** SW Build 2188600 on Wed Apr  4 18:40:38 MDT 2018
+  **** IP Build 2185939 on Wed Apr  4 20:55:05 MDT 2018
+    ** Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
+
+source C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.sim/sim_1/behav/xsim/xsim.dir/tb_conv3x3_mac_q24_behav/webtalk/xsim_webtalk.tcl -notrace
+INFO: [Common 17-206] Exiting Webtalk at Mon Nov  9 08:17:46 2026...
+run_program: Time (s): cpu = 00:00:01 ; elapsed = 00:00:06 . Memory (MB): peak = 897.625 ; gain = 0.000
+INFO: [USF-XSim-69] 'elaborate' step finished in '6' seconds
+INFO: [USF-XSim-4] XSim::Simulate design
+INFO: [USF-XSim-61] Executing 'SIMULATE' step in 'C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.sim/sim_1/behav/xsim'
+INFO: [USF-XSim-98] *** Running xsim
+   with args "tb_conv3x3_mac_q24_behav -key {Behavioral:sim_1:Functional:tb_conv3x3_mac_q24} -tclbatch {tb_conv3x3_mac_q24.tcl} -log {simulate.log}"
+INFO: [USF-XSim-8] Loading simulator feature
+Vivado Simulator 2018.1
+Time resolution is 1 ps
+source tb_conv3x3_mac_q24.tcl
+# set curr_wave [current_wave_config]
+# if { [string length $curr_wave] == 0 } {
+#   if { [llength [get_objects]] > 0} {
+#     add_wave /
+#     set_property needs_save false [current_wave_config]
+#   } else {
+#      send_msg_id Add_Wave-1 WARNING "No top level signals found. Simulator will start without a wave window. If you want to open a wave window go to 'File->New Waveform Configuration' or type 'create_wave_config' in the TCL console."
+#   }
+# }
+# run 1000ns
+WARNING: file vectors.mem could not be opened
+ERROR missing vectors.mem
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 25 is not valid.
+ERROR vector header 0
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 0/0
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 0/1
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 0/2
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 0/3
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 0/4
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 0/5
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 0/6
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 0/7
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 0/8
+FAIL vector 0 actual acc=x q=x expected acc=x q=x
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 25 is not valid.
+ERROR vector header 1
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 1/0
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 1/1
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 1/2
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 1/3
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 1/4
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 1/5
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 1/6
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 1/7
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 1/8
+FAIL vector 1 actual acc=x q=x expected acc=x q=x
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 25 is not valid.
+ERROR vector header 2
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 2/0
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 2/1
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 2/2
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 2/3
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 2/4
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 2/5
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 2/6
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 2/7
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 2/8
+FAIL vector 2 actual acc=x q=x expected acc=x q=x
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 25 is not valid.
+ERROR vector header 3
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 3/0
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 3/1
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 3/2
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 3/3
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 3/4
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 3/5
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 3/6
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 3/7
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 3/8
+FAIL vector 3 actual acc=x q=x expected acc=x q=x
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 25 is not valid.
+ERROR vector header 4
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 4/0
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 4/1
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 4/2
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 4/3
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 4/4
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 4/5
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 4/6
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 4/7
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 4/8
+FAIL vector 4 actual acc=x q=x expected acc=x q=x
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 25 is not valid.
+ERROR vector header 5
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 5/0
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 5/1
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 5/2
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 5/3
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 5/4
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 5/5
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 5/6
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 5/7
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 5/8
+FAIL vector 5 actual acc=x q=x expected acc=x q=x
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 25 is not valid.
+ERROR vector header 6
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 6/0
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 6/1
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 6/2
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 6/3
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 6/4
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 6/5
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 6/6
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 6/7
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 6/8
+FAIL vector 6 actual acc=x q=x expected acc=x q=x
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 25 is not valid.
+ERROR vector header 7
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 7/0
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 7/1
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 7/2
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 7/3
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 7/4
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 7/5
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 7/6
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 7/7
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 7/8
+FAIL vector 7 actual acc=x q=x expected acc=x q=x
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 25 is not valid.
+ERROR vector header 8
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'tb_conv3x3_mac_q24_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+launch_simulation: Time (s): cpu = 00:00:06 ; elapsed = 00:00:11 . Memory (MB): peak = 914.828 ; gain = 17.203
+run all
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 8/0
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 8/1
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 8/2
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 8/3
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 8/4
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 8/5
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 8/6
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 8/7
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 8/8
+FAIL vector 8 actual acc=x q=x expected acc=x q=x
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 25 is not valid.
+ERROR vector header 9
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 9/0
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 9/1
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 9/2
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 9/3
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 9/4
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 9/5
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 9/6
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 9/7
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 9/8
+FAIL vector 9 actual acc=x q=x expected acc=x q=x
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 25 is not valid.
+ERROR vector header 10
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 10/0
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 10/1
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 10/2
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 10/3
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 10/4
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 10/5
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 10/6
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 10/7
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 10/8
+FAIL vector 10 actual acc=x q=x expected acc=x q=x
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 25 is not valid.
+ERROR vector header 11
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 11/0
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 11/1
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 11/2
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 11/3
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 11/4
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 11/5
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 11/6
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 11/7
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 11/8
+FAIL vector 11 actual acc=x q=x expected acc=x q=x
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 25 is not valid.
+ERROR vector header 12
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 12/0
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 12/1
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 12/2
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 12/3
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 12/4
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 12/5
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 12/6
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 12/7
+ERROR: File descriptor (0) passed to $fscanf in file C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v at line 30 is not valid.
+ERROR vector terms 12/8
+FAIL vector 12 actual acc=x q=x expected acc=x q=x
+PASS: 13 arithmetic vectors
+$finish called at time : 1590 ns : File "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v" Line 49
+INFO: [USF-XSim-96] XSim completed. Design snapshot 'tb_conv3x3_mac_q24_behav' loaded.
+INFO: [USF-XSim-97] XSim simulation ran for 1000ns
+run all
+PASS: 13 arithmetic vectors
+$finish called at time : 1590 ns : File "C:/Users/KristaStacey/Documents/emnistFPGA/emnistModelTest/emnistModelTest.srcs/sources_1/imports/emnistFPGA/tb_conv3x3_mac_q24.v" Line 49
