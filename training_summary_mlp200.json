@@ -1,0 +1,32 @@
+{
+  "dataset": "EMNIST Balanced",
+  "architecture": [
+    784,
+    200,
+    47
+  ],
+  "model_type": "dense MLP; no cryptography",
+  "hidden_activation": "sigmoid",
+  "output": "linear logits for training; sigmoid preserves argmax for inference",
+  "training_loss": "multiclass softmax cross entropy (PyTorch CrossEntropyLoss)",
+  "export_cost_field": "CrossEntropyCost (JSON compatibility only)",
+  "optimizer": "Adam",
+  "learning_rate": 0.003,
+  "decay_factor": 0.92,
+  "decay_every_epochs": 5,
+  "batch_size": 128,
+  "seed": 2026,
+  "preprocessing": "transpose raw 28x28 IDX image once, flatten row-major, scale by /255.0",
+  "training_count": 101520,
+  "validation_count": 11280,
+  "best_validation_epoch": 16,
+  "best_validation_correct": 9376,
+  "best_validation_total": 11280,
+  "best_validation_accuracy": 0.8312056737588652,
+  "smoke_test": false,
+  "test_correct": 15604,
+  "test_accuracy": 0.83,
+  "hardware_compatibility": "NOT established; quantization and ZyNet validation required",
+  "test_total": 18800,
+  "test_loss": 0.5395348195826754
+}

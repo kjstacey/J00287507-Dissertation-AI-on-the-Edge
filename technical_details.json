@@ -1,0 +1,53 @@
+{
+  "limitations": "Per-tensor symmetric quantization of weights and unsigned quantization of ReLU outputs. Activations calibrated from validation images; floating-point accumulation and biases; no integer datapath, clipping study, measured FPGA power, timing, or hardware area.",
+  "input_preprocessing": "transpose raw IDX once; divide by 255.0",
+  "calibration_source": "first N images from seeded validation split",
+  "validation_count": 11280,
+  "results": {
+    "improved": {
+      "checkpoint": "emnist_cnn_improved_output\\best_cnn_checkpoint.pt",
+      "epoch": 37,
+      "parameters": 472591,
+      "macs_per_image": 18696576,
+      "activation_elements_by_layer": {
+        "features.0": 25088,
+        "features.2": 25088,
+        "features.4": 6272,
+        "features.5": 12544,
+        "features.7": 12544,
+        "features.9": 3136,
+        "classifier.1": 128,
+        "classifier.4": 47
+      },
+      "largest_single_activation_elements": 25088,
+      "activation_calibration_maxima": {
+        "features.1": 1.3421779870986938,
+        "features.3": 2.353588581085205,
+        "features.6": 4.011044025421143,
+        "features.8": 5.909960746765137,
+        "classifier.2": 14.074600219726562
+      }
+    },
+    "compact": {
+      "checkpoint": "emnist_compact_cnn_output\\best_cnn_checkpoint.pt",
+      "epoch": 36,
+      "parameters": 26351,
+      "macs_per_image": 1922240,
+      "activation_elements_by_layer": {
+        "features.0": 12544,
+        "features.2": 3136,
+        "features.3": 6272,
+        "features.5": 1568,
+        "features.6": 3136,
+        "pool": 64,
+        "classifier": 47
+      },
+      "largest_single_activation_elements": 12544,
+      "activation_calibration_maxima": {
+        "features.1": 6.332396507263184,
+        "features.4": 39.31584930419922,
+        "features.7": 195.11578369140625
+      }
+    }
+  }
+}
