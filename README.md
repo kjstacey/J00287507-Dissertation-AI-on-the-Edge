@@ -1,64 +1,59 @@
 # Cloud Run Inference Service
 
-This branch documents the **Google Cloud Run inference service** used by the dissertation’s cross-platform machine-learning experiments.
+This branch documents the **Google Cloud Run inference services** used in the dissertation's cross-platform machine-learning experiments.
 
-The cloud service is documented independently from any specific client implementation. FPGA and Unity clients connect to the same remote inference service but maintain their own networking, request handling, timing, and measurement code in separate branches.
+The cloud services are documented independently from their FPGA and Unity clients. Each client maintains its own networking, request handling, timing, and measurement code in separate repository branches.
 
-The first deployment documented here is the MNIST inference service.
+The branch currently documents two deployments:
 
-## MNIST Cloud Run Service
+- **MNIST:** Fully connected neural network for handwritten digit classification.
+- **EMNIST Balanced:** Convolutional neural network (CNN) for 47-class handwritten character classification.
 
-The MNIST model was deployed as:
+## Cloud Run Deployments
 
-```text
-Service:  mnist-cloud-inference
-Project:  mnist-cloud-fpga
-Region:   us-east1
-Endpoint: /predict
-```
+| Configuration | MNIST | EMNIST Balanced |
+|---|---|---|
+| Service | `mnist-cloud-inference` | `emnist-cloud-inference` |
+| Project | `mnist-cloud-fpga` | `mnist-cloud-fpga` |
+| Region | `us-east1` | `us-east1` |
+| Endpoint | `/predict` | `/predict` |
+| Input | 784 raw image bytes | 784 raw image bytes |
+| Output | 10 classes | 47 classes |
+| Model | Fully connected NN | Compact CNN |
 
-The service URL used during testing was:
+### Service URLs
 
+**MNIST**
 ```text
 https://mnist-cloud-inference-221036165238.us-east1.run.app
 ```
 
-Inference requests were sent using:
-
+**EMNIST**
 ```text
-POST /predict
+https://emnist-cloud-inference-221036165238.us-east1.run.app
 ```
 
-The service hostname was used rather than a fixed IP address because Cloud Run frontend addresses can change.
+Both services accept classification requests through `POST /predict` and return JSON predictions.
 
-## Notebook
+## Documentation Notebooks
 
-The main documentation notebook is:
+### MNIST
 
-```text
-Cloud_Run_Inference_Service_Setup_MNIST.ipynb
-```
+[Cloud Run Inference Service Setup — MNIST](Cloud_Run_Inference_Service_Setup_MNIST.ipynb)
 
-The notebook describes:
+Documents service creation, source files, dependencies, model loading, request processing, security configuration, observability, and exported logs.
 
-- creation of the Cloud Run service;
-- service region and endpoint;
-- deployed source files;
-- Python dependencies;
-- MNIST request and response format;
-- model loading and inference flow;
-- service revisions;
-- access configuration;
-- encryption configuration;
-- Cloud Run observability;
-- request logs; and
-- the separation between the cloud service and client-specific FPGA or Unity implementations.
+### EMNIST
 
-The notebook also includes a template for documenting changes required for later datasets and models.
+[Cloud Run Inference Service Setup — EMNIST](EMNIST_Cloud_Run_Inference_Service_Setup.ipynb)
 
-## MNIST Service Source
+Documents the adaptation of the MNIST cloud workflow to the EMNIST Balanced CNN, deployment, request validation, service configuration, and monitoring evidence.
 
-The MNIST deployment used the following Cloud Run source files:
+## Service Source Files
+
+### MNIST
+
+The MNIST deployment used:
 
 ```text
 main.py
@@ -67,215 +62,101 @@ requirements.txt
 WeigntsAndBiases.txt
 ```
 
-The service used:
-
-```text
-Flask==3.0.3
-gunicorn==23.0.0
-numpy==1.26.4
-```
-
-The deployed model used the same trained MNIST neural network evaluated by the local implementations.
-
-The network architecture was:
+The model used a fully connected architecture:
 
 ```text
 784 → 30 → 20 → 10
 ```
 
-## Request Processing
+The service converted incoming image bytes to floating-point values, normalized them by 128.0, executed the trained network, and returned the predicted digit.
 
-The MNIST service accepts one image as 784 raw byte values.
+### EMNIST
 
-The server-side path is:
+The EMNIST deployment source is preserved in:
 
-```text
-784-byte request
-        ↓
-NumPy conversion
-        ↓
-float64 conversion
-        ↓
-normalization by 128.0
-        ↓
-reshape to 784 × 1
-        ↓
-neural-network feedforward
-        ↓
-predicted digit
-        ↓
-JSON response
-```
+[EMNIST Cloud Run Service Archive](EMNIST_Cloud_Run_Service.zip)
 
-A prediction response has the form:
-
-```json
-{"prediction": 7}
-```
-
-## Cloud Run Screenshots
-
-The branch includes screenshots documenting the deployed MNIST service.
-
-### Scaling
+The archive contains:
 
 ```text
-Cloud_MNIST_Scaling.png
+main.py
+best_cnn_checkpoint.pt
+Dockerfile
+requirements.txt
+README.md
 ```
 
-This image documents the deployed service and Cloud Run scaling activity.
+The deployed compact CNN uses three convolutional layers followed by global average pooling and a 47-class output layer.
 
-### Source
+Both deployments preserve the 28 × 28 grayscale image format established by MNIST.
 
-```text
-Cloud_MNIST_Sources.png
-```
+The EMNIST branch also includes the [diagnostic test archive](EMNIST_Cloud_Test_Batch_0900.zip), used to validate remote predictions against known EMNIST test images.
 
-This image shows the deployed source files and Python dependencies.
+## Service Validation
 
-### Security
+### MNIST
 
-```text
-Cloud_MNIST_Security.png
-```
+The MNIST service was validated using FPGA and Unity clients. Successful inference requests returned HTTP status `200`, with predictions provided in JSON format.
 
-This image documents the Cloud Run authentication and encryption configuration.
+### EMNIST
 
-During the experimental deployment, IAM controls were enabled while the service was also publicly callable because `allUsers` had service access.
+The EMNIST deployment was validated through Cloud Shell using HTTP requests and known EMNIST images.
 
-The service used a Google-managed encryption key.
+The service successfully accepted 784-byte image requests and returned classifications within the expected 47-class range.
 
-### Metrics
+A diagnostic test using EMNIST images 900–999 produced **91 correct classifications out of 100 (91%)**.
 
-```text
-Cloud_MNIST_Metrics.png
-```
+This diagnostic test verified the deployed service independently of the FPGA client. Formal FPGA classification accuracy, latency, and throughput measurements are documented separately.
 
-This image documents Cloud Run observability metrics including:
+## Cloud Run Configuration and Monitoring
 
-- request count;
-- request latency;
-- end-to-end request latency; and
-- latency breakdown.
+### MNIST Evidence
 
-### Errors
+| File | Description |
+|---|---|
+| `Cloud_MNIST_Sources.png` | Deployed service source |
+| `Cloud_MNIST_Scaling.png` | Scaling configuration and activity |
+| `Cloud_MNIST_Security.png` | Authentication and encryption |
+| `Cloud_MNIST_Metrics.png` | Request and latency metrics |
+| `Cloud_MNIST_Errors.png` | Error monitoring |
+| `Cloud_MNIST_logs.json` | Exported service logs |
 
-```text
-Cloud_MNIST_Errors.png
-```
+### EMNIST Evidence
 
-This image documents the Cloud Run error dashboard for the experimental period.
+| File | Description |
+|---|---|
+| `emnist_cloud_run_source.png` | Deployed source and CNN architecture |
+| `emnist_cloud_run_networking.png` | Ingress and endpoint configuration |
+| `emnist_cloud_run_security.png` | Authentication and encryption settings |
+| `emnist_cloud_run_metrics1.png` | Request counts and latency metrics |
+| `emnist_cloud_run_metrics2.png` | Container instances, CPU, and memory utilization |
+| `emnist_cloud_service.png` | Service deployment and endpoint verification |
+| `emnist_cloud_service_tes100.png` | Diagnostic classification results |
+| `emnist_cloud_local_test1.png` | Initial endpoint testing |
+| `emnist_cloud_local_test5.png` | Additional classification validation |
 
-## Exported Cloud Run Logs
+The accompanying notebooks provide detailed interpretation of these files.
 
-The branch includes:
+### Security Configuration
 
-```text
-Cloud_MNIST_logs.json
-```
+The experimental services used HTTPS and Google-managed encryption keys.
 
-The exported logs provide Cloud Run-side evidence of requests sent to the service.
+The EMNIST networking configuration permitted internet ingress. Although the security interface displayed an authentication requirement, the service remained publicly accessible because `allUsers` had been granted access.
 
-The logs include information such as:
+These settings describe the experimental deployment rather than a production-secure configuration.
 
-```text
-request method
-request URL
-request size
-response size
-HTTP status
-protocol
-Cloud Run request latency
-timestamp
-service name
-revision
-region
-client user agent
-```
+## Relationship to Client Implementations
 
-Successful MNIST requests returned HTTP status `200`.
+This branch documents the **remote inference services only**.
 
-The logs also identify requests sent by Unity through the `UnityPlayer` user agent.
+FPGA client branches preserve Ethernet communication, lwIP, TCP/TLS handling, shared BRAM transfers, returned classifications, FPGA utilization, power measurements, and client-observed latency and throughput.
 
-Cloud Run request latency should not be interpreted as the same measurement as FPGA-side or Unity-side end-to-end latency. Client branches define and record their own timing boundaries.
+Unity client branches preserve image preparation, UnityWebRequest communication, response processing, and PC and Meta Quest 3S performance measurements.
 
-## Relationship to Client Branches
-
-This branch documents only the **remote inference service**.
-
-### FPGA cloud branches
-
-The FPGA-specific branches document:
-
-- Ethernet communication;
-- lwIP;
-- DNS;
-- TCP;
-- TLS;
-- FPGA/PS mailbox communication;
-- image transmission;
-- returned predictions;
-- FPGA-side latency and throughput;
-- FPGA memory/resource measurements; and
-- physical power measurements.
-
-### Unity cloud branches
-
-The Unity-specific branches document:
-
-- UnityWebRequest;
-- dataset or camera input preparation;
-- request construction;
-- response handling;
-- PC and Quest deployment; and
-- client-side latency and throughput.
-
-This separation allows the same cloud service to be evaluated from multiple client platforms.
-
-## Future Dataset Deployments
-
-This branch will also document Cloud Run changes required for later datasets and models.
-
-For each new deployment, record:
-
-```text
-Dataset
-Service name
-Region
-Model file
-Model architecture
-Input dimensions
-Input data type
-Input normalization
-Request format
-Response format
-main.py changes
-Model-loading changes
-requirements.txt changes
-Endpoint changes
-Cloud Run revision
-Deployment date
-Validation performed
-```
-
-If the same Cloud Run service is updated rather than creating a new service, the associated revision should be recorded so that each dataset/model configuration can be identified.
-
-## Current Files
-
-The current MNIST cloud documentation includes:
-
-```text
-Cloud_Run_Inference_Service_Setup_MNIST.ipynb
-Cloud_MNIST_Scaling.png
-Cloud_MNIST_Sources.png
-Cloud_MNIST_Security.png
-Cloud_MNIST_Metrics.png
-Cloud_MNIST_Errors.png
-Cloud_MNIST_logs.json
-```
+Cloud Run observability metrics represent measurements from the remote service and should not be treated as equivalent to client-side end-to-end request latency.
 
 ## Purpose
 
-The purpose of this branch is to preserve the setup and configuration of the remote inference environment used by the dissertation experiments.
+This branch preserves the source configurations, deployment procedures, validation evidence, and Cloud Run monitoring information required to reproduce and analyze the remote inference environment.
 
-The branch will expand as additional datasets are deployed, while FPGA- and Unity-specific communication and performance measurements remain in their respective implementation branches.
+The MNIST and EMNIST deployments provide the cloud-processing components used to compare local and cloud-assisted machine-learning execution across the dissertation's computational platforms.
