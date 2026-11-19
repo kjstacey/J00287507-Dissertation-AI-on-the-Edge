@@ -38,13 +38,20 @@ FPGA MNIST Implementation
     ├── Cloud classification
     └── Cloud live camera classification
 
+FPGA EMNIST Implementation
+    ├── Local CNN and live camera classification
+    ├── Controlled local classification and measurement reports
+    ├── Cloud live camera classification
+    └── Cloud accuracy, speed, and continuous-inference measurements
+
 Unity MNIST Implementation
     ├── Local Windows PC
     ├── Local Meta Quest 3S
     └── Cloud PC / Quest 3S
 
 Cloud Infrastructure
-    └── Server-side cloud inference implementation
+    ├── MNIST Cloud Run service
+    └── EMNIST Balanced Cloud Run service
 
 FPGA Security Evaluation
     └── Configuration review, vendor advisory applicability, and Vivado screenshots
@@ -306,6 +313,58 @@ Contains the live cloud-classification notebook, measurements, screenshots, and 
 
 ---
 
+# FPGA EMNIST Implementation
+
+The EMNIST Balanced implementation extended the established MNIST FPGA camera, memory, and cloud-communication workflows to a compact CNN with 47 output classes. The ZedBoard Rev. E was used for both autonomous inference in programmable logic and cloud-assisted classification through the Zynq ARM processing system and Google Cloud Run. Supporting camera modules and test-data generation files are referenced from their existing branches rather than duplicated.
+
+## `EMNIST-FPGA`
+
+Entry point for the EMNIST FPGA experiments, linking the local CNN, live-camera, controlled benchmarking, and cloud-assisted workflows.
+
+## Local FPGA CNN and live camera
+
+### `EMNIST-FPGA-Live-Classification-Code`
+
+Contains the local CNN hardware modules, trained parameter memory files, FPGA sources, and bitstream used for autonomous EMNIST classification.
+
+### `EMNIST-FPGA-Live-Classification-Notebook-and-Data`
+
+Contains simulation and ILA verification, development documentation, Vivado evidence, and recorded live-camera classification demonstrations.
+
+## Local FPGA controlled measurement
+
+### `EMNIST-FPGA-Local-Classification-Measurements-Code`
+
+Contains the controlled local FPGA implementations, 100-image-block test ROM and expected-label data, ROM-generation script, bitstreams, and relevant implementation reports and measurement evidence. The same generated EMNIST test data is reused in cloud measurement configurations.
+
+### Local FPGA measurement reports
+
+The additional EMNIST local FPGA measurement-report branch preserves routed power, timing, route-status, and utilization evidence for the baseline hardware configuration. The measurement code and reports use their separate branch documentation for exact filenames and build conditions.
+
+## Cloud-assisted live camera classification
+
+### `EMNIST-FPGA-Cloud-Live-Classification-Code`
+
+Contains the modified top-level VHDL, FPGA bitstream, Vivado block-design Tcl, and ARM SDK `main.c` and `tcp_client.c` used for the camera-to-cloud proof of concept.
+
+### `EMNIST-FPGA-Cloud-Live-Classification-Notebook-and-Data`
+
+Contains the implementation notebook, Vivado block and RTL schematics, troubleshooting record, and videos documenting the successful live classification of a handwritten **F**. The live demonstration provides functional evidence rather than controlled accuracy data.
+
+## Cloud-assisted controlled measurement
+
+### `EMNIST-FPGA-Cloud-Classification-Measurement-Code`
+
+Contains separate speed/accuracy and continuous-inference configurations, including their bitstreams, top-level VHDL, SDK source variants, block-design Tcl, and development notebook. The latter configuration repeatedly sends prepared images to the cloud during sustained power observations.
+
+### `EMNIST-FPGA-Cloud-Classification-Measurement-Notebook-and-Data`
+
+Contains consolidated SDK logs, formal and validation CSV records, run summaries, analysis notebook, Vivado reports for speed, live, and continuous configurations, and photographs/videos documenting classification, connection behavior, and physical power conditions.
+
+The controlled FPGA cloud evaluation used **1,000 distinct EMNIST Balanced images**, processed in ten blocks of 100 with three accepted formal runs per block. It recorded **876/1,000 correct classifications (87.60%)**, **3,000 formal cloud requests**, a mean request latency of **62.659 ms**, and an effective throughput of **14.241 classifications/s**. The local FPGA accuracy on the same image subset was **87.2%**. Formal client-observed request timing is distinct from local inference latency and from Cloud Run observability metrics. The cloud server and its deployment assets are documented in `Cloud`.
+
+---
+
 # Unity MNIST Implementation
 
 The Unity branches document MNIST inference on Windows PC and Meta Quest 3S.
@@ -512,11 +571,18 @@ This result is kept distinct from the 10,000-image local model validation result
 
 ## `Cloud`
 
-Contains the server-side cloud inference implementation and deployment materials used by the FPGA and Unity cloud-assisted experiments.
+Contains the **MNIST and EMNIST Balanced Google Cloud Run inference services**, documented separately from the FPGA and Unity clients. Both services were deployed in `us-east1` under the `mnist-cloud-fpga` project and expose a `/predict` endpoint accepting 784 raw image bytes and returning a JSON classification.
 
-The Unity clients communicate with the deployed prediction service through HTTP requests.
+| Service | Model | Output classes | Setup notebook |
+|---|---|---:|---|
+| `mnist-cloud-inference` | Fully connected 784–30–20–10 NN | 10 | `Cloud_Run_Inference_Service_Setup_MNIST.ipynb` |
+| `emnist-cloud-inference` | Compact CNN | 47 | `EMNIST_Cloud_Run_Inference_Service_Setup.ipynb` |
 
-The client-side MNIST representation is converted to a compact 784-byte request before transmission.
+The branch also preserves the EMNIST deployment archive (`EMNIST_Cloud_Run_Service.zip`), diagnostic test archive (`EMNIST_Cloud_Test_Batch_0900.zip`), source and configuration screenshots, and request, latency, instance, CPU, and memory monitoring evidence. A diagnostic test of EMNIST images 900–999 correctly classified **91/100** images; this was an independent cloud-service check, not the formal FPGA accuracy result.
+
+The EMNIST security evidence records internet-accessible ingress, Google-managed encryption, and an `allUsers` permission that made the service publicly callable despite the authentication selection shown in the console. Security observations and client TLS limitations are discussed in the dedicated security branches.
+
+FPGA and Unity client code, network measurements, and device power results remain in their own implementation branches. Cloud Run request measurements must not be equated with client-observed request-response latency.
 
 ---
 
@@ -738,7 +804,23 @@ Cloud Classification
 Cloud Live Classification
 ```
 
-## 4. Unity Local PC
+## 4. FPGA EMNIST
+
+```text
+EMNIST-FPGA
+    ↓
+Local CNN and controlled FPGA measurements
+    ↓
+Cloud-assisted live camera proof of concept
+    ↓
+Cloud speed/accuracy and continuous-inference measurements
+    ↓
+Cloud (EMNIST server-side deployment and monitoring)
+```
+
+See the FPGA EMNIST section for the separate Code and Notebook-and-Data branches and reused local test-data files.
+
+## 5. Unity Local PC
 
 ```
 MNIST-Unity
@@ -748,7 +830,7 @@ MNIST-Unity-Local-PC-Code
 MNIST-Unity-Local-PC-Data-And-Notebook
 ```
 
-## 5. Unity Local Quest 3S
+## 6. Unity Local Quest 3S
 
 ```
 MNIST-Unity-Local-Quest3S-Code
@@ -756,7 +838,7 @@ MNIST-Unity-Local-Quest3S-Code
 MNIST-Unity-Local-Quest3S-Data-And-Notebook
 ```
 
-## 6. Unity Cloud
+## 7. Unity Cloud
 
 ```
 MNIST-Unity-Cloud-Code
@@ -766,7 +848,7 @@ MNIST-Unity-Cloud-Data-And-Notebook
 
 ---
 
-## 7. FPGA Security
+## 8. FPGA Security
 
 ```
 FPGA-Security
@@ -869,15 +951,11 @@ The notebooks document these relationships so that the repository reflects the a
 
 # Current Repository Scope
 
-The repository documents the **MNIST implementation and evaluation workflow**, including the FPGA, Windows PC, Meta Quest 3S, cloud-assisted inference, and security evaluation branches.
+The repository documents the **MNIST cross-platform implementation and evaluation workflow**, including FPGA, Windows PC, Meta Quest 3S, local and cloud-assisted inference, and security evaluation.
 
-The repository also includes the **EMNIST Balanced model-development workflow**, consisting of dataset preparation, training, validation, model comparison, and selection of the compact CNN for subsequent implementation.
+The repository also documents **EMNIST Balanced model development, local FPGA inference, FPGA cloud-assisted inference, live camera validation, controlled measurements, and the deployed EMNIST Cloud Run service**. The selected compact CNN and its reference model remain in the EMNIST model branches; implementation-specific sources and evidence are maintained in the corresponding FPGA and cloud branches.
 
-The EMNIST model branches currently preserve the selected PyTorch reference model, training code, reproducibility notebook, and supporting experimental evidence.
-
-Additional EMNIST FPGA and Unity implementation materials, including validated deployment-specific model representations, will be incorporated as the work is completed.
-
-SVHN, CIFAR-10, and other remaining dissertation implementation materials may be added using the same general branch organization.
+EMNIST Unity implementations and subsequent SVHN and CIFAR-10 experiments may be incorporated using the same organization as work progresses.
 
 ---
 
